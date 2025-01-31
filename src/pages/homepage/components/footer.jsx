@@ -3,7 +3,7 @@ import { FaWhatsapp, FaInstagram, FaFacebook } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 w-screen py-8 mt-auto">
+    <footer className="bg-black w-screen py-8 mt-auto">
       <div className="container mx-auto px-4 flex flex-col items-center">
         {/* Text Section */}
         <span 

@@ -58,19 +58,19 @@ const Navbar = () => {
                 <div className="flex items-center space-x-4">
                     <button
                         onClick={scrollToTop}
-                        className="text-gray-700 text-lg sm:text-xl md:text-2xl pr-2 hover:text-white transition duration-300"
+                        className="text-white text-lg sm:text-xl md:text-2xl pr-2 hover:text-white transition duration-300"
                     >
                         <FaArrowUp />
                     </button>
                     <button
                         onClick={toggleFullscreen}
-                        className="hidden sm:block text-gray-700 text-lg sm:text-xl md:text-2xl pr-2 hover:text-white transition duration-300"
+                        className="hidden sm:block text-white text-lg sm:text-xl md:text-2xl pr-2 hover:text-white transition duration-300"
                     >
                         <FaExpand />
                     </button>
                     <button
                         onClick={toggleMenu}
-                        className="text-gray-700 text-xl sm:text-2xl md:text-3xl hover:text-white transition duration-300"
+                        className="text-white text-xl sm:text-2xl md:text-3xl hover:text-white transition duration-300"
                     >
                         <FaBars />
                     </button>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Navbar from '../homePage/components/navbar';
-// import WeAreCosmo from '../components/weAreCosmo';
+import HeroSection from './components/heroSection';
 // import LookOurCreation from '../components/lookOurCreation';
 // import ImageCardHandler from '../components/imageCardHandler';
 // import YearsAndClients from './yearsAndClients';
@@ -16,17 +16,12 @@ function Home() {
   return (
     <div className="flex flex-col min-h-screen">  {/* Ensure the page takes full height */}
       <Navbar />
-      {/* Uncomment and add content components as needed */}
-      {/* <WeAreCosmo />
-      <LookOurCreation />
+      <HeroSection />      
+      {/* <LookOurCreation />
       <ImageCardHandler />
       <YearsAndClients />
       <ClientCardHolder /> */}
-      
-      <div className="flex-grow"> {/* Content space that takes available space */}
-        {/* Add content components here */}
-      </div>
-      
+
       <Footer />
     </div>
   );

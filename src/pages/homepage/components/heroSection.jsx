@@ -5,9 +5,7 @@ import bgImage3 from "../../../assets/images/bgImg3.jfif";
 
 const HeroSection = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const [navHeight, setNavHeight] = useState(0);
   const images = [bgImage1, bgImage3, bgImage2];
-
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -18,35 +16,25 @@ const HeroSection = () => {
   }, [images.length]);
 
   return (
-    <div
-      className="relative w-full overflow-hidden flex items-center justify-center"
-      style={{
-        marginTop: `${navHeight}px`, // Push below navbar
-        height: '100vh',
-        width: "100vw", // Ensure full width
-        backgroundImage: `url(${images[currentImage]})`,
-        backgroundSize: "cover", // Cover entire screen
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center", // Center the image
-      }}
-    >
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-purple-600 text-center">
-        <h1
-          className="text-6xl font-bold"
-          style={{
-            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.7)", // Black outline shadow for the text
-          }}
-        >
-          SMART EDGE
-        </h1>
-        <h1
-          className="text-2xl font-bold mt-4"
-          style={{
-            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.7)", // Black outline shadow for the text
-          }}
-        >
+    <div className="relative w-full h-screen">
+      {/* Background Image Fixed */}
+      <div
+        className="fixed inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${images[currentImage]})`,
+          zIndex: -1,
+        }}
+      />
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black opacity-40"></div>
+
+      {/* Text Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-purple-800 text-center px-4">
+        <h1 className="text-6xl font-bold drop-shadow-lg">SMART EDGE</h1>
+        <h2 className="text-2xl font-bold mt-4 drop-shadow-lg">
           Buy a variety of tech accessories.
-        </h1>
+        </h2>
       </div>
     </div>
   );

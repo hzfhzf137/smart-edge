@@ -8,22 +8,7 @@ const HeroSection = () => {
   const [navHeight, setNavHeight] = useState(0);
   const images = [bgImage1, bgImage3, bgImage2];
 
-  // Function to update navbar height
-  useEffect(() => {
-    const updateNavHeight = () => {
-      const navbar = document.querySelector("nav");
-      if (navbar) {
-        setNavHeight(navbar.offsetHeight);
-      }
-    };
 
-    updateNavHeight();
-    window.addEventListener("resize", updateNavHeight);
-
-    return () => window.removeEventListener("resize", updateNavHeight);
-  }, []);
-
-  // Background image change effect
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prevImage) => (prevImage + 1) % images.length);
@@ -37,7 +22,7 @@ const HeroSection = () => {
       className="relative w-full overflow-hidden flex items-center justify-center"
       style={{
         marginTop: `${navHeight}px`, // Push below navbar
-        height: `calc(100vh - ${navHeight}px)`, // Ensure full viewport height after navbar
+        height: '100vh',
         width: "100vw", // Ensure full width
         backgroundImage: `url(${images[currentImage]})`,
         backgroundSize: "cover", // Cover entire screen

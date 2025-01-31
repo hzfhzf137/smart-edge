@@ -5,6 +5,7 @@ import smartEdgeLogo from '../../../assets/images/smartEdgeLogo.png';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false); // To track scroll position
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -31,6 +32,25 @@ const Navbar = () => {
         }
     };
 
+    // Detect scroll position
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setIsScrolled(true); // Scroll down
+            } else {
+                setIsScrolled(false); // At top
+            }
+        };
+
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Cleanup event listener
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -44,33 +64,37 @@ const Navbar = () => {
     }, [isOpen]);
 
     return (
-        <header className=" bg-purple-900 bg-opacity-50 pr-2 pl-2 fixed top-0 left-0 w-full z-50 shadow-lg">
-            <nav className="flex items-center justify-between p-2 sm:p-3 md:p-5">
+        <header
+            className={`fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300 ease-in-out ${
+                isScrolled ? 'backdrop-blur-sm' : 'bg-purple-900 bg-opacity-50'
+            } pr-2 pl-2`}
+        >
+            <nav className="flex items-center justify-between p-2 sm:p-2 md:p-3">
                 <div className="flex items-center">
                     <Link to="/" onClick={closeMenu}>
                         <img
                             src={smartEdgeLogo}
                             alt="company logo"
-                            className="w-36 h-14 object-contain" // Increased logo size
+                            className="w-36 h-14 object-contain" // Reduced logo size
                         />
                     </Link>
                 </div>
                 <div className="flex items-center space-x-4">
                     <button
                         onClick={scrollToTop}
-                        className="text-white text-lg sm:text-xl md:text-2xl pr-2 hover:text-white transition duration-300"
+                        className={`text-md sm:text-lg md:text-xl pr-2 transition duration-300 ${isScrolled ? 'text-purple-900' : 'text-white'}`} // Reduced icon size
                     >
                         <FaArrowUp />
                     </button>
                     <button
                         onClick={toggleFullscreen}
-                        className="hidden sm:block text-white text-lg sm:text-xl md:text-2xl pr-2 hover:text-white transition duration-300"
+                        className={`hidden sm:block text-md sm:text-lg md:text-xl pr-2 transition duration-300 ${isScrolled ? 'text-purple-900' : 'text-white'}`} // Reduced icon size
                     >
                         <FaExpand />
                     </button>
                     <button
                         onClick={toggleMenu}
-                        className="text-white text-xl sm:text-2xl md:text-3xl hover:text-white transition duration-300"
+                        className={`text-xl sm:text-2xl md:text-2xl transition duration-300 ${isScrolled ? 'text-purple-900' : 'text-white'}`} // Reduced icon size
                     >
                         <FaBars />
                     </button>

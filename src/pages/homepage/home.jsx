@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import Navbar from '../homePage/components/navbar';
 import HeroSection from './components/heroSection';
-// import LookOurCreation from '../components/lookOurCreation';
-// import ImageCardHandler from '../components/imageCardHandler';
-// import YearsAndClients from './yearsAndClients';
-// import ClientCardHolder from '../components/clientCardHolder';
+import ProductCardHandler from './components/productCardHandler';
 import Footer from '../homePage/components/footer';
 import '../../App.css';
 
@@ -17,11 +14,7 @@ function Home() {
     <div className="flex flex-col min-h-screen">  {/* Ensure the page takes full height */}
       <Navbar />
       <HeroSection />      
-      {/* <LookOurCreation />
-      <ImageCardHandler />
-      <YearsAndClients />
-      <ClientCardHolder /> */}
-
+      <ProductCardHandler/>
       <Footer />
     </div>
   );

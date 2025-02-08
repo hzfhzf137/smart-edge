@@ -27,10 +27,10 @@ const HeroSection = () => {
       />
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black opacity-40"></div>
+      <div className="absolute inset-0 bg-black opacity-20"></div>
 
       {/* Text Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-purple-800 text-center px-4">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-blue-600 text-center px-4">
         <h1 className="text-6xl font-bold drop-shadow-lg">SMART EDGE</h1>
         <h2 className="text-2xl font-bold mt-4 drop-shadow-lg">
           Buy a variety of tech accessories.

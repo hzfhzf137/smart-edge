@@ -66,7 +66,7 @@ const Navbar = () => {
     return (
         <header
             className={`fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300 ease-in-out ${
-                isScrolled ? 'backdrop-blur-sm' : 'bg-purple-900 bg-opacity-50'
+                isScrolled ? 'backdrop-blur-sm' : 'bg-blue-600 bg-opacity-50'
             } pr-2 pl-2`}
         >
             <nav className="flex items-center justify-between p-2 sm:p-2 md:p-3">
@@ -82,19 +82,19 @@ const Navbar = () => {
                 <div className="flex items-center space-x-4">
                     <button
                         onClick={scrollToTop}
-                        className={`text-md sm:text-lg md:text-xl pr-2 transition duration-300 ${isScrolled ? 'text-purple-900' : 'text-white'}`} // Reduced icon size
+                        className={`text-md sm:text-lg md:text-xl pr-2 transition duration-300 ${isScrolled ? 'text-blue-600' : 'text-white'}`} // Reduced icon size
                     >
                         <FaArrowUp />
                     </button>
                     <button
                         onClick={toggleFullscreen}
-                        className={`hidden sm:block text-md sm:text-lg md:text-xl pr-2 transition duration-300 ${isScrolled ? 'text-purple-900' : 'text-white'}`} // Reduced icon size
+                        className={`hidden sm:block text-md sm:text-lg md:text-xl pr-2 transition duration-300 ${isScrolled ? 'text-blue-600' : 'text-white'}`} // Reduced icon size
                     >
                         <FaExpand />
                     </button>
                     <button
                         onClick={toggleMenu}
-                        className={`text-xl sm:text-2xl md:text-2xl transition duration-300 ${isScrolled ? 'text-purple-900' : 'text-white'}`} // Reduced icon size
+                        className={`text-xl sm:text-2xl md:text-2xl transition duration-300 ${isScrolled ? 'text-blue-600' : 'text-white'}`} // Reduced icon size
                     >
                         <FaBars />
                     </button>
@@ -122,7 +122,7 @@ const Navbar = () => {
                                 <li>
                                     <Link
                                         to="/"
-                                        className="hover:text-gray-300 hover:border-b-2 hover:border-orange-500 transition duration-300"
+                                        className="hover:text-gray-300 hover:border-b-2 hover:border-blue-600 transition duration-300"
                                         onClick={closeMenu}
                                     >
                                         Home
@@ -131,7 +131,7 @@ const Navbar = () => {
                                 <li>
                                     <Link
                                         to="/airpods"
-                                        className="hover:text-gray-300 hover:border-b-2 hover:border-orange-500 transition duration-300"
+                                        className="hover:text-gray-300 hover:border-b-2 hover:border-blue-600 transition duration-300"
                                         onClick={closeMenu}
                                     >
                                         Airpods
@@ -140,7 +140,7 @@ const Navbar = () => {
                                 <li>
                                     <Link
                                         to="/chargers"
-                                        className="hover:text-gray-300 hover:border-b-2 hover:border-orange-500 transition duration-300"
+                                        className="hover:text-gray-300 hover:border-b-2 hover:border-blue-600 transition duration-300"
                                         onClick={closeMenu}
                                     >
                                         Chargers
@@ -149,7 +149,7 @@ const Navbar = () => {
                                 <li>
                                     <Link
                                         to="/contact-us"
-                                        className="hover:text-gray-300 hover:border-b-2 hover:border-orange-500 transition duration-300"
+                                        className="hover:text-gray-300 hover:border-b-2 hover:border-blue-600 transition duration-300"
                                         onClick={closeMenu}
                                     >
                                         Contact Us

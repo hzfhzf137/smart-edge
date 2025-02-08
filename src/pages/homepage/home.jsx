@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Navbar from '../homePage/components/navbar';
 import HeroSection from './components/heroSection';
 import ProductCardHandler from './components/productCardHandler';
+import AboutUs from './components/aboutUs';
 import Footer from '../homePage/components/footer';
 import '../../App.css';
 
@@ -15,6 +16,7 @@ function Home() {
       <Navbar />
       <HeroSection />      
       <ProductCardHandler/>
+      <AboutUs/>
       <Footer />
     </div>
   );

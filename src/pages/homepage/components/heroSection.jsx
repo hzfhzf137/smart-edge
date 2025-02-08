@@ -34,8 +34,10 @@ const HeroSection = () => {
         data-aos="fade-up"
         data-aos-duration="1000"
       >
-        <h1 className="text-6xl font-bold drop-shadow-lg">SMART EDGE</h1>
-        <h2 className="text-2xl font-bold mt-4 drop-shadow-lg">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold drop-shadow-lg">
+          SMART EDGE
+        </h1>
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mt-4 drop-shadow-lg">
           Buy a variety of tech accessories.
         </h2>
       </div>

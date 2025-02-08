@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import Navbar from '../homePage/components/navbar';
+import Navbar from '../reuseableComponents/navbar';
 import HeroSection from './components/heroSection';
 import ProductCardHandler from './components/productCardHandler';
 import AboutUs from './components/aboutUs';
-import Footer from '../homePage/components/footer';
+import Footer from '../reuseableComponents/footer';
 import '../../App.css';
 
 function Home() {

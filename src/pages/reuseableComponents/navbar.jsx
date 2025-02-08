@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowUp, FaExpand, FaBars } from 'react-icons/fa';
-import smartEdgeLogo from '../../../assets/images/smartEdgeLogo.png';
+import smartEdgeLogo from '../../assets/images/smartEdgeLogo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

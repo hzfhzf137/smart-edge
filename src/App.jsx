@@ -4,22 +4,28 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './App.css';
 import Home from '../src/pages/homepage/home';
+import Airpods from '../src/pages/airpods/Airpods'; 
+import Chargers from './pages/chargers/chargers';
+import SmartWatches from './pages/smart-watches/smartWatches';
+import ContactUs from './pages/contactUs/contactUs';
 
 function App() {
   useEffect(() => {
     AOS.init({
       duration: 1200,
-      once: false, // This ensures that animations trigger every time the element enters the viewport
+      once: false, 
     });
   }, []);
-
 
   return (
     <React.Fragment>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* Uncomment and add other routes as needed */}
+          <Route path="/airpods" element={<Airpods />} />
+          <Route path="/chargers" element={<Chargers />} />
+          <Route path="/smart-watches" element={<SmartWatches />} />
+          <Route path="/contact-us" element={<ContactUs />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

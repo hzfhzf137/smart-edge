@@ -4,9 +4,7 @@ import { FaWhatsapp, FaInstagram, FaFacebook } from 'react-icons/fa';
 const Footer = () => {
   return (
     <footer 
-      className="bg-black w-full py-8" 
-      data-aos="fade-up" 
-      data-aos-duration="1000"
+      className="bg-black bg-opacity-100 w-full py-8" 
     >
       <div className="max-w-7xl mx-auto px-4 flex flex-col items-center space-y-6">
         {/* Connect Text */}
@@ -53,11 +51,13 @@ const Footer = () => {
         {/* Divider Line */}
         <div 
           className="w-1/2 h-0.5 bg-gray-700 mb-4 mt-5"           
+          
         ></div>
 
         {/* Copyright Section */}
         <p 
           className="mt-5 text-gray-400 text-xs sm:text-sm md:text-base text-center"
+          
         >
           © 2024 Smart Edge. All rights reserved.
         </p>

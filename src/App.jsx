@@ -8,6 +8,9 @@ import Airpods from '../src/pages/airpods/Airpods';
 import Chargers from './pages/chargers/chargers';
 import SmartWatches from './pages/smart-watches/smartWatches';
 import ContactUs from './pages/contactUs/contactUs';
+import Login from './pages/authentications/login';
+import Signup from './pages/authentications/signup';
+import CartPage from './pages/cart/cartPage';
 
 function App() {
   useEffect(() => {
@@ -26,6 +29,9 @@ function App() {
           <Route path="/chargers" element={<Chargers />} />
           <Route path="/smart-watches" element={<SmartWatches />} />
           <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} /> 
+          <Route path="/cart" element={<CartPage />} /> 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

@@ -1,20 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaArrowUp, FaExpand, FaBars } from 'react-icons/fa';
+import { 
+  FaArrowUp, 
+  FaExpand, 
+  FaBars, 
+  FaShoppingCart, 
+  FaUser 
+} from 'react-icons/fa';
 import smartEdgeLogo from '../../assets/images/smartEdgeLogo.png';
 
 const Navbar = () => {
+  // State for mobile menu, cart panel, scroll position, and login status
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false); // To track scroll position
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Simulated login state
 
+  // Toggle mobile menu
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  // Toggle cart panel
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
+  // Close mobile menu
   const closeMenu = () => {
     setIsOpen(false);
   };
 
+  // Scroll to top functionality
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -22,6 +39,7 @@ const Navbar = () => {
     });
   };
 
+  // Toggle full-screen mode
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch((err) => {
@@ -35,27 +53,24 @@ const Navbar = () => {
   // Detect scroll position
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true); // Scrolled down
-      } else {
-        setIsScrolled(false); // At top
-      }
+      setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Prevent body scroll when mobile menu or cart panel is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'visible';
-    }
+    document.body.style.overflow = isOpen || isCartOpen ? 'hidden' : 'visible';
     return () => {
       document.body.style.overflow = 'visible';
     };
-  }, [isOpen]);
+  }, [isOpen, isCartOpen]);
+
+  // Common classes for icons
+  const iconClasses = `text-sm sm:text-md md:text-lg pr-1 transition duration-300 ${
+    isScrolled ? 'text-blue-600' : 'text-white'
+  }`;
 
   return (
     <header
@@ -64,42 +79,49 @@ const Navbar = () => {
       } pr-2 pl-2`}
     >
       <nav className="flex items-center justify-between p-2 sm:p-3 md:p-4">
+        {/* Logo */}
         <div className="flex items-center">
           <Link to="/" onClick={closeMenu}>
             <img
               src={smartEdgeLogo}
               alt="company logo"
-              className="w-28 h-10 object-contain" // Smaller logo
+              className="w-28 h-10 object-contain"
             />
           </Link>
         </div>
+        {/* Right Side Icons */}
         <div className="flex items-center space-x-2">
-          <button
-            onClick={scrollToTop}
-            className={`text-sm sm:text-md md:text-lg pr-1 transition duration-300 ${
-              isScrolled ? 'text-blue-600' : 'text-white'
-            }`}
-          >
+          <button onClick={scrollToTop} className={iconClasses}>
             <FaArrowUp />
           </button>
-          <button
-            onClick={toggleFullscreen}
-            className={`hidden sm:block text-sm sm:text-md md:text-lg pr-1 transition duration-300 ${
-              isScrolled ? 'text-blue-600' : 'text-white'
-            }`}
-          >
+          <button onClick={toggleFullscreen} className={`hidden sm:block ${iconClasses}`}>
             <FaExpand />
           </button>
-          <button
-            onClick={toggleMenu}
-            className={`text-sm sm:text-md md:text-lg transition duration-300 ${
-              isScrolled ? 'text-blue-600' : 'text-white'
-            }`}
-          >
+          <button onClick={toggleCart} className={iconClasses}>
+            <FaShoppingCart />
+          </button>
+          {isLoggedIn ? (
+            <button onClick={() => console.log("User clicked")} className={iconClasses}>
+              <FaUser />
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className={`text-sm sm:text-md md:text-lg transition duration-300 ${
+                isScrolled ? 'text-blue-600' : 'text-white'
+              }`}
+              onClick={closeMenu}
+            >
+              Login
+            </Link>
+          )}
+          <button onClick={toggleMenu} className={iconClasses}>
             <FaBars />
           </button>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
       {isOpen && (
         <>
           <div
@@ -168,6 +190,37 @@ const Navbar = () => {
                   </a>
                 </p>
               </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Cart Slider */}
+      {isCartOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-40 transition duration-300 ease-in-out"
+            onClick={() => setIsCartOpen(false)}
+          ></div>
+          <div
+            className={`fixed top-0 right-0 w-64 md:w-80 h-full bg-white text-black p-6 z-50 transition-transform transform ${
+              isCartOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
+          >
+            <button
+              onClick={() => setIsCartOpen(false)}
+              className="absolute top-5 right-5 text-2xl sm:text-3xl md:text-4xl text-black hover:text-gray-600 transition duration-300"
+            >
+              &times;
+            </button>
+            <div className="flex flex-col h-full">
+              <h2 className="text-xl font-bold mb-4">Your Cart</h2>
+              {/* Cart content: Replace with your dynamic cart items */}
+              <p className="text-gray-700">Your cart is empty.</p>
+              {/* Checkout button */}
+              <button className="mt-auto w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">
+                Proceed to Checkout
+              </button>
             </div>
           </div>
         </>

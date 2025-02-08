@@ -2,7 +2,12 @@ import React from "react";
 
 const ProductCard = ({ image, label }) => {
   return (
-    <div className="relative w-full h-64 md:h-72 lg:h-80 overflow-hidden">
+    <div 
+      className="relative w-full h-64 md:h-72 lg:h-80 overflow-hidden"
+      data-aos="zoom-in-up"
+      data-aos-duration="1500"
+      data-aos-easing="ease-out-back"
+    >
       <img
         src={image}
         alt={label}

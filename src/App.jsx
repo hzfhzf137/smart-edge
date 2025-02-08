@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import './App.css';
 import Home from '../src/pages/homepage/home';
-// import CosmoCommunication from './components/cosmoCommunication.jsx';
-// import ProductAndServices from './components/productAndServices.jsx';
-// import ContactUs from './components/contactUs.jsx';
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1200,
+      once: false, // This ensures that animations trigger every time the element enters the viewport
+    });
+  }, []);
+
+
   return (
     <React.Fragment>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/airpods" element={<airpods />} />
-          <Route path="/chargers" element={<chargers />} />
-          <Route path="/contact-us" element={<ContactUs />} /> */}
-          <Route path="*" element={<Navigate to="/" />} /> 
+          {/* Uncomment and add other routes as needed */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
     </React.Fragment>

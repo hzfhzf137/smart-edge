@@ -12,7 +12,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">  {/* Ensure the page takes full height */}
+    <div className="overflow-x-hidden flex flex-col min-h-screen">  {/* Ensure the page takes full height */}
       <Navbar />
       <HeroSection />      
       <ProductCardHandler/>

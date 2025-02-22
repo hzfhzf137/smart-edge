@@ -25,7 +25,7 @@ const products = [
 
 const ProductCardHandler = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-0 bg-black">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-0 pt-5 pb-5 bg-black">
       {products.map((product, index) => (
         <ProductCard 
           key={index} 

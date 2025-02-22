@@ -26,11 +26,11 @@ const HeroSection = () => {
       />
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black opacity-20"></div>
+      <div className="absolute inset-0 bg-black opacity-50"></div>
 
       {/* Animated Text Content */}
       <div
-        className="relative z-10 flex flex-col items-center justify-center h-full text-blue-900 text-center px-4"
+        className="relative z-10 flex flex-col items-center justify-center h-full text-gray-300 text-center px-4"
         data-aos="fade-up"
         data-aos-duration="1000"
       >

@@ -1,8 +1,8 @@
 import React from "react";
 import ProductCard from "./productCard";
-import airpods from "../../../assets/images/airpodsImgHomePage.jfif";
-import charger from "../../../assets/images/chargerImgHomePage.jfif";
-import smartWatch from "../../../assets/images/smartWatchImgHomePage.jfif";
+import airpods from "../../../assets/images/airpodsImgHomePage.jpg";
+import charger from "../../../assets/images/chargerImgHomePage.png";
+import smartWatch from "../../../assets/images/smartWatchImgHomePage.png";
 
 const products = [
   {

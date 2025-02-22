@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ProductCard = ({ image, label, route }) => {
   const button = (
-    <button className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-2 border-white text-white px-4 py-1 text-sm md:text-base font-medium uppercase tracking-wide bg-transparent hover:bg-white hover:text-black transition duration-300 w-40 md:w-48">
+    <button className="absolute top-4/5 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-2 backdrop-blur-2xl border-white text-white px-4 py-1 text-sm md:text-base font-medium uppercase tracking-wide bg-transparent hover:bg-white hover:text-black transition duration-300 w-40 md:w-48">
       {label}
     </button>
   );
@@ -18,7 +18,7 @@ const ProductCard = ({ image, label, route }) => {
       <img
         src={image}
         alt={label}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
       {route ? <Link to={route}>{button}</Link> : button}
     </div>

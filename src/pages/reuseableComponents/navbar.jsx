@@ -75,7 +75,7 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300 ease-in-out ${
-        isScrolled ? 'backdrop-blur-sm' : 'bg-blue-900 bg-opacity-50'
+        isScrolled ? 'bg-gray-300' : 'bg-blue-900 bg-opacity-50'
       } pr-2 pl-2`}
     >
       <nav className="flex items-center justify-between p-2 sm:p-3 md:p-4">
@@ -90,7 +90,7 @@ const Navbar = () => {
           </Link>
         </div>
         {/* Right Side Icons */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-5">
           <button onClick={scrollToTop} className={iconClasses}>
             <FaArrowUp />
           </button>

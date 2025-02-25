@@ -1,16 +1,20 @@
 import React from "react";
 import Navbar from "../reuseableComponents/navbar";
 import Footer from "../reuseableComponents/footer";
+import AirpodsHero from "./components/airpodsHero";
+import AirpodsFeaturesAndGallery from "./components/airpodsFeaturesAndGallery";
+import AirpodsAddToCart from "./components/airpodsAddToCart";
 
 const Airpods = () => {
   return (
     <React.Fragment>
-        <Navbar/>
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold text-gray-800">Apple Airpods</h1>
-      {/* Add more details about Airpods as needed */}
-    </div>
-    <Footer/>
+      <Navbar />
+      <div className="pt-16 pb-40 overflow-x-hidden">
+        <AirpodsHero />
+        <AirpodsFeaturesAndGallery />
+        <AirpodsAddToCart />
+      </div>
+      <Footer />
     </React.Fragment>
   );
 };

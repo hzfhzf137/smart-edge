@@ -45,32 +45,32 @@ const AirpodsFeaturesAndGallery = () => {
 
       {/* Slider Gallery on the Right */}
       <div className="md:w-1/2 p-4 flex flex-col items-center justify-center">
-        <div className="relative w-full max-w-md h-64 overflow-hidden">
-          {/* Display current slide */}
+        {/* Image Container */}
+        <div className="w-full max-w-md mx-auto">
           <img
             src={images[currentIndex]}
             alt={`AirPods Slide ${currentIndex + 1}`}
-            className="w-full h-full object-contain transition duration-300"
+            className="w-full max-h-64 object-contain transition duration-300"
           />
+        </div>
 
-          {/* Previous Arrow */}
+        {/* Slider Arrows */}
+        <div className="flex items-center justify-between w-full max-w-md mt-3">
           <button
             onClick={prevSlide}
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
+            className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
           >
             <FaArrowLeft />
           </button>
-
-          {/* Next Arrow */}
           <button
             onClick={nextSlide}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
+            className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
           >
             <FaArrowRight />
           </button>
         </div>
 
-        {/* Optional: Slide Indicators */}
+        {/* Slide Indicators */}
         <div className="flex space-x-2 mt-3">
           {images.map((_, index) => (
             <div

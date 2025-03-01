@@ -61,11 +61,41 @@ const Navbar = () => {
 
   // Prevent body scroll when mobile menu or cart panel is open
   useEffect(() => {
-    document.body.style.overflow = isOpen || isCartOpen ? 'hidden' : 'visible';
+    // Hide body scroll
+    document.body.style.overflow = (isOpen || isCartOpen) ? 'hidden' : 'visible';
     return () => {
       document.body.style.overflow = 'visible';
     };
   }, [isOpen, isCartOpen]);
+
+  // **Disable any scrolling** if the menu is open
+  useEffect(() => {
+    function disableScroll(e) {
+      // Prevent the default scroll behavior
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+
+    if (isOpen) {
+      // Add scroll event listeners to window
+      window.addEventListener('scroll', disableScroll, { passive: false });
+      window.addEventListener('wheel', disableScroll, { passive: false });
+      window.addEventListener('touchmove', disableScroll, { passive: false });
+    } else {
+      // Remove them if menu is closed
+      window.removeEventListener('scroll', disableScroll, { passive: false });
+      window.removeEventListener('wheel', disableScroll, { passive: false });
+      window.removeEventListener('touchmove', disableScroll, { passive: false });
+    }
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('scroll', disableScroll, { passive: false });
+      window.removeEventListener('wheel', disableScroll, { passive: false });
+      window.removeEventListener('touchmove', disableScroll, { passive: false });
+    };
+  }, [isOpen]);
 
   // Common classes for icons
   const iconClasses = `text-sm sm:text-md md:text-lg pr-1 transition duration-300 ${
@@ -89,6 +119,7 @@ const Navbar = () => {
             />
           </Link>
         </div>
+
         {/* Right Side Icons */}
         <div className="flex items-center space-x-5">
           <button onClick={scrollToTop} className={iconClasses}>
@@ -125,7 +156,7 @@ const Navbar = () => {
       {isOpen && (
         <>
           <div
-            className="fixed inset-0  backdrop-blur-md z-40 transition duration-300 ease-in-out"
+            className="fixed inset-0 backdrop-blur-md z-40 transition duration-300 ease-in-out"
             onClick={closeMenu}
           ></div>
           <div
@@ -178,23 +209,10 @@ const Navbar = () => {
                   </Link>
                 </li>
               </ul>
-              {/* <div className="text-xs sm:text-sm md:text-xs text-gray-500 border-t border-gray-700 pt-4">
-                <p>Designed by Huzaifa Mahmood</p>
-                <p>
-                  Email:{" "}
-                  <a
-                    href="mailto:hzfhzf137@gmail.com"
-                    className="hover:text-gray-400 transition duration-300"
-                  >
-                    hzfhzf137@gmail.com
-                  </a>
-                </p>
-              </div> */}
             </div>
           </div>
         </>
       )}
-
 
       {/* Cart Slider */}
       {isCartOpen && (

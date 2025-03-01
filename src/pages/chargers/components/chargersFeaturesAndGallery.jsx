@@ -38,52 +38,50 @@ const ChargersFeaturesAndGallery = () => {
     >
       {/* Features on the Left */}
       <div className="md:w-1/2 p-4">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-4">MagSafe Charger Features</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-4">Features</h2>
         <ul className="list-disc pl-5 space-y-2 text-gray-700">
-          <li>Up to 15W fast wireless charging for iPhone</li>
-          <li>Automatic magnetic alignment for a perfect fit</li>
-          <li>Works with Qi-certified devices for versatile charging</li>
-          <li>Compact, lightweight design for travel</li>
-          <li>Durable Apple-quality cable and sleek finish</li>
+          <li>Wireless and effortless listening</li>
+          <li>High-fidelity audio quality</li>
+          <li>Seamless pairing with Apple devices</li>
+          <li>Up to 24 hours of battery life with charging case</li>
         </ul>
       </div>
 
       {/* Slider Gallery on the Right */}
       <div className="md:w-1/2 p-4 flex flex-col items-center justify-center">
-        <div className="relative w-full max-w-md h-64 overflow-hidden">
-          {/* Display current slide */}
+        {/* Image Container */}
+        <div className="w-full max-w-md mx-auto">
           <img
             src={images[currentIndex]}
-            alt={`MagSafe Charger Slide ${currentIndex + 1}`}
-            className="w-full h-full object-contain transition duration-300"
+            alt={`AirPods Slide ${currentIndex + 1}`}
+            className="w-full max-h-64 object-contain transition duration-300"
           />
+        </div>
 
-          {/* Previous Arrow */}
+        {/* Slider Arrows */}
+        <div className="flex items-center justify-between w-full max-w-md mt-3">
           <button
             onClick={prevSlide}
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
+            className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
           >
             <FaArrowLeft />
           </button>
-
-          {/* Next Arrow */}
           <button
             onClick={nextSlide}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
+            className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
           >
             <FaArrowRight />
           </button>
         </div>
 
-        {/* Optional: Slide Indicators */}
+        {/* Slide Indicators */}
         <div className="flex space-x-2 mt-3">
           {images.map((_, index) => (
             <div
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full cursor-pointer ${
-                index === currentIndex ? "bg-blue-600" : "bg-gray-300"
-              }`}
+              className={`w-3 h-3 rounded-full cursor-pointer ${index === currentIndex ? "bg-blue-600" : "bg-gray-300"
+                }`}
             />
           ))}
         </div>

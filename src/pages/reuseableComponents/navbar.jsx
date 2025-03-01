@@ -125,7 +125,7 @@ const Navbar = () => {
       {isOpen && (
         <>
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-40 transition duration-300 ease-in-out"
+            className="fixed inset-0  backdrop-blur-md z-40 transition duration-300 ease-in-out"
             onClick={closeMenu}
           ></div>
           <div
@@ -178,7 +178,7 @@ const Navbar = () => {
                   </Link>
                 </li>
               </ul>
-              <div className="text-xs sm:text-sm md:text-xs text-gray-500 border-t border-gray-700 pt-4">
+              {/* <div className="text-xs sm:text-sm md:text-xs text-gray-500 border-t border-gray-700 pt-4">
                 <p>Designed by Huzaifa Mahmood</p>
                 <p>
                   Email:{" "}
@@ -189,11 +189,12 @@ const Navbar = () => {
                     hzfhzf137@gmail.com
                   </a>
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </>
       )}
+
 
       {/* Cart Slider */}
       {isCartOpen && (

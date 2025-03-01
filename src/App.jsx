@@ -4,7 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './App.css';
 import Home from '../src/pages/homepage/home';
-import Airpods from '../src/pages/airpods/Airpods'; 
+import Airpods from '../src/pages/airpods/airpods'; 
 import Chargers from './pages/chargers/chargers';
 import SmartWatches from './pages/smart-watches/smartWatches';
 import ContactUs from './pages/contactUs/contactUs';

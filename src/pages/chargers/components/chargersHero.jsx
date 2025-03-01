@@ -1,11 +1,11 @@
 import React from "react";
-import airpodsHeroSectionImg from "../../../assets/images/airpodsHeroSectionImg.jpg";
+import chargersHeroSectionImg from "../../../assets/images/chargersHeroSectionImg.jpg";
 
-const AirpodsHero = () => {
+const ChargersHero = () => {
   return (
     <section
       className=" w-full h-[60vh] bg-cover bg-center flex items-center justify-center text-white"
-      style={{ backgroundImage: `url(${airpodsHeroSectionImg})` }}
+      style={{ backgroundImage: `url(${chargersHeroSectionImg})` }}
       data-aos="fade-up"
       data-aos-duration="1000"
     >
@@ -16,4 +16,4 @@ const AirpodsHero = () => {
   );
 };
 
-export default AirpodsHero;
+export default ChargersHero;

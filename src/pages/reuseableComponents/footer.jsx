@@ -4,12 +4,12 @@ import { FaWhatsapp, FaInstagram, FaFacebook } from 'react-icons/fa';
 const Footer = () => {
   return (
     <footer 
-      className="bg-black bg-opacity-100 w-full py-8" 
+      className="bg-black bg-opacity-100 w-full py-8 relative" 
     >
       <div className="max-w-7xl mx-auto px-4 flex flex-col items-center space-y-6">
         {/* Connect Text */}
         <span 
-          className="text-gray-300 text-xs sm:text-sm md:text-base text-center" 
+          className="text-gray-300 text-xs sm:text-sm md:text-base text-center " 
           aria-label="Connect with us"
           data-aos="fade-right"
           data-aos-delay="100"
@@ -56,7 +56,7 @@ const Footer = () => {
 
         {/* Copyright Section */}
         <p 
-          className="mt-5 text-gray-400 text-xs sm:text-sm md:text-base text-center"
+          className="mt-5 text-gray-400 text-xs sm:text-sm md:text-base text-center select-none"
           
         >
           © 2024 Smart Edge. All rights reserved.

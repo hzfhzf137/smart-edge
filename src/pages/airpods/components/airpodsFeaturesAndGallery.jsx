@@ -5,6 +5,8 @@ import airpodsSliderImg1 from "../../../assets/images/airpodsSliderImg1.jpg";
 import airpodsSliderImg2 from "../../../assets/images/airpodsSliderImg2.jpg";
 import airpodsSliderImg3 from "../../../assets/images/airpodsSliderImg3.jpg";
 import airpodsSliderImg4 from "../../../assets/images/airpodsSliderImg4.jpg";
+import icon3D from "../../../assets/images/3dIcon.png";
+
 
 const AirpodsFeaturesAndGallery = () => {
   // Array of images for the slider
@@ -92,9 +94,9 @@ const AirpodsFeaturesAndGallery = () => {
           >
             <span>Show in 3D</span>
             {/* If you have a 3D logo image, uncomment below and replace /3dlogo.png */}
-            {/* <img src="/3dlogo.png" alt="3D Logo" className="w-5 h-5" /> */}
+            <img src={icon3D} alt="3D Logo" className="w-5 h-5" />
             {/* Or if you want an icon, you can use an icon library or a text-based logo */}
-            <span>(3D logo)</span>
+            {/* <span>(3D logo)</span> */}
           </Link>
         </div>
       </div>

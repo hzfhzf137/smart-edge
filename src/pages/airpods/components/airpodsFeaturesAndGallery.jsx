@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // <-- import Link to navigate
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import airpodsSliderImg1 from "../../../assets/images/airpodsSliderImg1.jpg";
 import airpodsSliderImg2 from "../../../assets/images/airpodsSliderImg2.jpg";
@@ -81,6 +82,20 @@ const AirpodsFeaturesAndGallery = () => {
               }`}
             />
           ))}
+        </div>
+
+        {/* 3D Model Link */}
+        <div className="mt-4">
+          <Link
+            to="/airpods-3d"
+            className="text-blue-600 hover:underline inline-flex items-center space-x-2"
+          >
+            <span>Show in 3D</span>
+            {/* If you have a 3D logo image, uncomment below and replace /3dlogo.png */}
+            {/* <img src="/3dlogo.png" alt="3D Logo" className="w-5 h-5" /> */}
+            {/* Or if you want an icon, you can use an icon library or a text-based logo */}
+            <span>(3D logo)</span>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import magSafeChargerSliderImg1 from "../../../assets/images/magSafeChargerSliderImg1.jpg";
-import magSafeChargerSliderImg2 from "../../../assets/images/magSafeChargerSliderImg2.jpg";
-import magSafeChargerSliderImg3 from "../../../assets/images/magSafeChargerSliderImg3.jpg";
-import magSafeChargerSliderImg4 from "../../../assets/images/magSafeChargerSliderImg4.jpg";
-import magSafeChargerSliderImg5 from "../../../assets/images/magSafeChargerSliderImg5.jpg";
-import magSafeChargerSliderImg6 from "../../../assets/images/magSafeChargerSliderImg6.jpg";
+import appleWatchSliderImg1 from "../../../assets/images/appleWatchSliderImg1.jpg";
+import appleWatchSliderImg2 from "../../../assets/images/appleWatchSliderImg2.jpg";
+// import appleWatchSliderImg3 from "../../../assets/images/appleWatchSliderImg3.jpg";
+// import appleWatchSliderImg4 from "../../../assets/images/appleWatchSliderImg4.jpg";
 
 const SmartWatchesFeaturesAndGallery = () => {
   // Array of images for the slider (replace with actual Apple Watch images if available)
   const images = [
-    magSafeChargerSliderImg1,
-    magSafeChargerSliderImg2,
-    magSafeChargerSliderImg3,
-    magSafeChargerSliderImg4,
-    magSafeChargerSliderImg5,
-    magSafeChargerSliderImg6,
+    appleWatchSliderImg1,
+    appleWatchSliderImg2,
   ];
 
   // Current slide index

@@ -4,7 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './App.css';
 
-// Existing pages
+// All App pages
 import Home from '../src/pages/homepage/home';
 import Airpods from '../src/pages/airpods/airpods'; 
 import Chargers from './pages/chargers/chargers';
@@ -14,8 +14,9 @@ import Login from './pages/authentications/login';
 import Signup from './pages/authentications/signup';
 import CartPage from './pages/cart/cartPage';
 
-// New Airpods 3D page
-import AirpodsModelPage from './pages/airpods/components/airpodsModelPage'; // Adjust path as needed
+// 3D model pages
+import AirpodsModelPage from './pages/airpods/components/airpodsModelPage';
+import MagSafeModelPage from './pages/chargers/components/magSafeModelPage';
 
 function App() {
   useEffect(() => {
@@ -38,8 +39,9 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<CartPage />} />
 
-          {/* New route for AirPods 3D Model */}
+          {/*route for 3D Model pages */}
           <Route path="/airpods-3d" element={<AirpodsModelPage />} />
+          <Route path="/magSafe-3d" element={<MagSafeModelPage />} />
 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

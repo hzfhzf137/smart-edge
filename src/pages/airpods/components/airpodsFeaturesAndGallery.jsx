@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // <-- import Link to navigate
+import { Link } from "react-router-dom"; 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import airpodsSliderImg1 from "../../../assets/images/airpodsSliderImg1.jpg";
 import airpodsSliderImg2 from "../../../assets/images/airpodsSliderImg2.jpg";

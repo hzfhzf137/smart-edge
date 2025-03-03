@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router-dom"; // <-- import Link to navigate
 import magSafeChargerSliderImg1 from "../../../assets/images/magSafeChargerSliderImg1.jpg";
 import magSafeChargerSliderImg2 from "../../../assets/images/magSafeChargerSliderImg2.jpg";
 import magSafeChargerSliderImg3 from "../../../assets/images/magSafeChargerSliderImg3.jpg";
 import magSafeChargerSliderImg4 from "../../../assets/images/magSafeChargerSliderImg4.jpg";
 import magSafeChargerSliderImg5 from "../../../assets/images/magSafeChargerSliderImg5.jpg";
 import magSafeChargerSliderImg6 from "../../../assets/images/magSafeChargerSliderImg6.jpg";
+import icon3D from "../../../assets/images/3dIcon.png";
+
 
 const ChargersFeaturesAndGallery = () => {
   // Array of images for the slider
@@ -84,6 +87,19 @@ const ChargersFeaturesAndGallery = () => {
                 }`}
             />
           ))}
+        </div>
+        {/* 3D Model Link */}
+        <div className="mt-4">
+          <Link
+            to="/magSafe-3d"
+            className="text-blue-600 hover:underline inline-flex items-center space-x-2"
+          >
+            <span>Show in 3D</span>
+            {/* If you have a 3D logo image, uncomment below and replace /3dlogo.png */}
+            <img src={icon3D} alt="3D Logo" className="w-5 h-5" />
+            {/* Or if you want an icon, you can use an icon library or a text-based logo */}
+            {/* <span>(3D logo)</span> */}
+          </Link>
         </div>
       </div>
     </section>

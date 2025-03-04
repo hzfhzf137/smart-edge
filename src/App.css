@@ -1,0 +1,8 @@
+/* If you have an App.css or global CSS file, define the fadeText keyframes */
+@keyframes fadeText {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  

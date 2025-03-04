@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; 
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import appleWatchSliderImg1 from "../../../assets/images/appleWatchSliderImg1.jpg";
 import appleWatchSliderImg2 from "../../../assets/images/appleWatchSliderImg2.jpg";
 // import appleWatchSliderImg3 from "../../../assets/images/appleWatchSliderImg3.jpg";
 // import appleWatchSliderImg4 from "../../../assets/images/appleWatchSliderImg4.jpg";
+import icon3D from "../../../assets/images/3dIcon.png";
+
 
 const SmartWatchesFeaturesAndGallery = () => {
   // Array of images for the slider (replace with actual Apple Watch images if available)
@@ -80,6 +83,20 @@ const SmartWatchesFeaturesAndGallery = () => {
               }`}
             />
           ))}
+        </div>
+
+        {/* 3D Model Link */}
+        <div className="mt-4">
+          <Link
+            to="/smartWatch-3d"
+            className="text-blue-600 hover:underline inline-flex items-center space-x-2"
+          >
+            <span>Show in 3D</span>
+            {/* If you have a 3D logo image, uncomment below and replace /3dlogo.png */}
+            <img src={icon3D} alt="3D Logo" className="w-5 h-5" />
+            {/* Or if you want an icon, you can use an icon library or a text-based logo */}
+            {/* <span>(3D logo)</span> */}
+          </Link>
         </div>
       </div>
     </section>

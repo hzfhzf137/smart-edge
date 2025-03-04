@@ -16,6 +16,7 @@ import Signup from './pages/authentications/signup';
 import CartPage from './pages/cart/cartPage';
 import AirpodsModelPage from './pages/airpods/components/airpodsModelPage';
 import MagSafeModelPage from './pages/chargers/components/magSafeModelPage';
+import SmartWatchModelPage from './pages/smart-watches/components/smartWatchesModelPage';
 
 // Import the loader
 import Loader from './loader';
@@ -53,6 +54,7 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/airpods-3d" element={<AirpodsModelPage />} />
         <Route path="/magSafe-3d" element={<MagSafeModelPage />} />
+        <Route path="/smartWatch-3d" element={<SmartWatchModelPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

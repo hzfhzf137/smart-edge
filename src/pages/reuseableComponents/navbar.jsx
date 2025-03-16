@@ -201,6 +201,15 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link
+                    to="/smart-watches"
+                    className="hover:text-gray-300 hover:border-b-2 hover:border-blue-900 transition duration-300"
+                    onClick={closeMenu}
+                  >
+                    Smart Watches
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     to="/contact-us"
                     className="hover:text-gray-300 hover:border-b-2 hover:border-blue-900 transition duration-300"
                     onClick={closeMenu}

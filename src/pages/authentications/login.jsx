@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import smartEdgeLogo from "../../assets/images/smartEdgeLogo.png"; // Adjust path as needed
+import smartEdgeLogoBlue from "../../assets/images/smartEdgeLogoBlue.png"; // Adjust path as needed
 
 const Login = () => {
   // Local state for form values and errors
@@ -28,7 +28,7 @@ const Login = () => {
       <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8 space-y-6">
         {/* Logo and Heading */}
         <div className="flex flex-col items-center">
-          <img src={smartEdgeLogo} alt="Smart Edge Logo" className="w-20 h-20 mb-4" />
+          <img src={smartEdgeLogoBlue} alt="Smart Edge Logo" className=" h-20 mb-4" />
           <h2 className="text-2xl font-bold text-gray-800">Login to Smart Edge</h2>
         </div>
 

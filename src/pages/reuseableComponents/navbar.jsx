@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  FaArrowUp, 
-  FaExpand, 
-  FaBars, 
-  FaShoppingCart, 
-  FaUser 
+import {
+  FaArrowUp,
+  FaExpand,
+  FaBars,
+  FaShoppingCart,
+  FaUser
 } from 'react-icons/fa';
-import smartEdgeLogo from '../../assets/images/smartEdgeLogo.png';
+import smartEdgeLogoWhite from '../../assets/images/smartEdgeLogoWhite.png';
+import smartEdgeLogoBlue from '../../assets/images/smartEdgeLogoBlue.png';
+
 
 const Navbar = () => {
   // State for mobile menu, cart panel, scroll position, and login status
@@ -98,24 +100,22 @@ const Navbar = () => {
   }, [isOpen]);
 
   // Common classes for icons
-  const iconClasses = `text-sm sm:text-md md:text-lg pr-1 transition duration-300 ${
-    isScrolled ? 'text-blue-600' : 'text-white'
-  }`;
+  const iconClasses = `text-sm sm:text-md md:text-lg pr-1 transition duration-300 ${isScrolled ? 'text-blue-600' : 'text-white'
+    }`;
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300 ease-in-out ${
-        isScrolled ? 'bg-gray-300' : 'bg-blue-900 bg-opacity-50'
-      } pr-2 pl-2`}
+      className={`fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300 ease-in-out ${isScrolled ? 'bg-gray-300' : 'bg-blue-900 bg-opacity-50'
+        } pr-2 pl-2`}
     >
       <nav className="flex items-center justify-between p-2 sm:p-3 md:p-4">
         {/* Logo */}
         <div className="flex items-center">
           <Link to="/" onClick={closeMenu}>
             <img
-              src={smartEdgeLogo}
+              src={isScrolled ? smartEdgeLogoBlue : smartEdgeLogoWhite}
               alt="company logo"
-              className="w-28 h-10 object-contain"
+              className="w-28 h-10 object-contain transition-opacity duration-300"
             />
           </Link>
         </div>
@@ -138,9 +138,8 @@ const Navbar = () => {
           ) : (
             <Link
               to="/login"
-              className={`text-sm sm:text-md md:text-lg transition duration-300 ${
-                isScrolled ? 'text-blue-600' : 'text-white'
-              }`}
+              className={`text-sm sm:text-md md:text-lg transition duration-300 ${isScrolled ? 'text-blue-600' : 'text-white'
+                }`}
               onClick={closeMenu}
             >
               Login
@@ -160,9 +159,8 @@ const Navbar = () => {
             onClick={closeMenu}
           ></div>
           <div
-            className={`fixed top-0 right-0 w-64 md:w-80 h-full bg-gray-800 text-white p-6 z-50 transition-transform transform ${
-              isOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}
+            className={`fixed top-0 right-0 w-64 md:w-80 h-full bg-gray-800 text-white p-6 z-50 transition-transform transform ${isOpen ? 'translate-x-0' : 'translate-x-full'
+              }`}
           >
             <button
               onClick={toggleMenu}
@@ -231,9 +229,8 @@ const Navbar = () => {
             onClick={() => setIsCartOpen(false)}
           ></div>
           <div
-            className={`fixed top-0 right-0 w-64 md:w-80 h-full bg-white text-black p-6 z-50 transition-transform transform ${
-              isCartOpen ? 'translate-x-0' : 'translate-x-full'
-            }`}
+            className={`fixed top-0 right-0 w-64 md:w-80 h-full bg-white text-black p-6 z-50 transition-transform transform ${isCartOpen ? 'translate-x-0' : 'translate-x-full'
+              }`}
           >
             <button
               onClick={() => setIsCartOpen(false)}

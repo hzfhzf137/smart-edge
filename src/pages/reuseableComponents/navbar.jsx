@@ -115,7 +115,7 @@ const Navbar = () => {
             <img
               src={isScrolled ? smartEdgeLogoBlue : smartEdgeLogoWhite}
               alt="company logo"
-              className="w-28 h-10 object-contain transition-opacity duration-300"
+              className=" h-5 object-contain transition-opacity duration-300"
             />
           </Link>
         </div>

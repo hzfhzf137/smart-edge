@@ -1,26 +1,37 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; 
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import airpodsSliderImg1 from "../../../assets/images/airpodsSliderImg1.jpg";
-import airpodsSliderImg2 from "../../../assets/images/airpodsSliderImg2.jpg";
-import airpodsSliderImg3 from "../../../assets/images/airpodsSliderImg3.jpg";
-import airpodsSliderImg4 from "../../../assets/images/airpodsSliderImg4.jpg";
 import icon3D from "../../../assets/images/3dIcon.png";
-
+import axios from "axios";
 
 const AirpodsFeaturesAndGallery = () => {
-  // Array of images for the slider
-  const images = [
-    airpodsSliderImg1,
-    airpodsSliderImg2,
-    airpodsSliderImg3,
-    airpodsSliderImg4,
-  ];
-
-  // Current slide index
+  const [images, setImages] = useState([]); // Initialize as empty array
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Handlers for next/prev slide
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const res = await axios.get("https://smartedge-backend-production.up.railway.app/api/products/airpods pro");
+        if (Array.isArray(res.data.galleryImages)) {
+          setImages(res.data.galleryImages);
+        } else if (typeof res.data.galleryImages === "string") {
+          const parsed = JSON.parse(res.data.galleryImages);
+          if (Array.isArray(parsed)) {
+            setImages(parsed);
+          } else {
+            console.error("Parsed galleryImages is not an array:", parsed);
+          }
+        } else {
+          console.error("galleryImages is not an array:", res.data.galleryImages);
+        }
+      } catch (error) {
+        console.error("Error fetching gallery images:", error);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
@@ -35,7 +46,7 @@ const AirpodsFeaturesAndGallery = () => {
       data-aos="fade-up"
       data-aos-duration="1000"
     >
-      {/* Features on the Left */}
+      {/* Features Section */}
       <div className="md:w-1/2 p-4">
         <h2 className="text-2xl sm:text-3xl font-bold mb-4">Features</h2>
         <ul className="list-disc pl-5 space-y-2 text-gray-700">
@@ -46,57 +57,62 @@ const AirpodsFeaturesAndGallery = () => {
         </ul>
       </div>
 
-      {/* Slider Gallery on the Right */}
+      {/* Gallery Section */}
       <div className="md:w-1/2 p-4 flex flex-col items-center justify-center">
-        {/* Image Container */}
-        <div className="w-full max-w-md mx-auto">
-          <img
-            src={images[currentIndex]}
-            alt={`AirPods Slide ${currentIndex + 1}`}
-            className="w-full max-h-64 object-contain transition duration-300"
-          />
-        </div>
-
-        {/* Slider Arrows */}
-        <div className="flex items-center justify-between w-full max-w-md mt-3">
-          <button
-            onClick={prevSlide}
-            className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
-          >
-            <FaArrowLeft />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
-          >
-            <FaArrowRight />
-          </button>
-        </div>
-
-        {/* Slide Indicators */}
-        <div className="flex space-x-2 mt-3">
-          {images.map((_, index) => (
-            <div
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full cursor-pointer ${
-                index === currentIndex ? "bg-blue-600" : "bg-gray-300"
-              }`}
+        {/* Image */}
+        {images.length > 0 ? (
+          <div className="w-full max-w-md mx-auto">
+            <img
+              src={images[currentIndex]}
+              alt={`AirPods Slide ${currentIndex + 1}`}
+              className="w-full max-h-64 object-contain transition duration-300"
             />
-          ))}
-        </div>
+          </div>
+        ) : (
+          <p>Loading images...</p>
+        )}
 
-        {/* 3D Model Link */}
+        {/* Arrows */}
+        {images.length > 0 && (
+          <div className="flex items-center justify-between w-full max-w-md mt-3">
+            <button
+              onClick={prevSlide}
+              className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
+            >
+              <FaArrowLeft />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80 transition duration-300"
+            >
+              <FaArrowRight />
+            </button>
+          </div>
+        )}
+
+        {/* Dots */}
+        {Array.isArray(images) && (
+          <div className="flex space-x-2 mt-3">
+            {images.map((_, index) => (
+              <div
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-3 h-3 rounded-full cursor-pointer ${
+                  index === currentIndex ? "bg-blue-600" : "bg-gray-300"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* 3D Link */}
         <div className="mt-4">
           <Link
             to="/airpods-3d"
             className="text-blue-600 hover:underline inline-flex items-center space-x-2"
           >
             <span>Show in 3D</span>
-            {/* If you have a 3D logo image, uncomment below and replace /3dlogo.png */}
             <img src={icon3D} alt="3D Logo" className="w-5 h-5" />
-            {/* Or if you want an icon, you can use an icon library or a text-based logo */}
-            {/* <span>(3D logo)</span> */}
           </Link>
         </div>
       </div>

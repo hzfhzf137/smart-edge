@@ -12,7 +12,7 @@ const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, loading } = useContext(AuthContext); // ✅ Include loading
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleCart = () => setIsCartOpen(!isCartOpen);
@@ -54,7 +54,11 @@ const Navbar = () => {
           <button onClick={toggleCart} className={iconClasses}>
             <FaShoppingCart />
           </button>
-          {user ? (
+
+          {/* ✅ Fix: Handle loading/user logic properly */}
+          {loading ? (
+            <span className={`${iconClasses} italic`}>...</span>
+          ) : user ? (
             <div className="relative">
               <button onClick={() => setShowLogout(!showLogout)} className={`font-semibold ${iconClasses}`}>
                 {user.name}
@@ -81,6 +85,7 @@ const Navbar = () => {
               Login
             </Link>
           )}
+
           <button onClick={toggleMenu} className={iconClasses}>
             <FaBars />
           </button>

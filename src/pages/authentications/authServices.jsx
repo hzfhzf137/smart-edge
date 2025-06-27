@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http:smartedge-backend-production-b679.up.railway.app/api/auth',
+  baseURL: 'https:smartedge-backend-production-b679.up.railway.app/api/auth',
   withCredentials: true,
 });
 

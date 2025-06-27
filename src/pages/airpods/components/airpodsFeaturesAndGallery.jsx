@@ -11,7 +11,7 @@ const AirpodsFeaturesAndGallery = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await axios.get("https://smartedge-backend-production.up.railway.app/api/products/airpods pro");
+        const res = await axios.get("https://smartedge-backend-production-b679.up.railway.app/api/products/airpods pro");
         if (Array.isArray(res.data.galleryImages)) {
           setImages(res.data.galleryImages);
         } else if (typeof res.data.galleryImages === "string") {

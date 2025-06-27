@@ -17,7 +17,7 @@ const Airpods = () => {
     if (navbar) setNavHeight(navbar.offsetHeight);
 
     // 👇 Fetch product data
-    axios.get("https://smartedge-backend-production.up.railway.app/api/products")
+    axios.get("https://smartedge-backend-production-b679.up.railway.app/api/products")
       .then((res) => {
         // If multiple products, filter the one for AirPods
         const airpods = res.data.find(p => p.name === "AirPods Pro");

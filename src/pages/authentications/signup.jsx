@@ -1,117 +1,87 @@
+// src/pages/authentications/signup.jsx
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import smartEdgeLogoBlue from "../../assets/images/smartEdgeLogoBlue.png"; // Adjust path if needed
+import { useNavigate, Link } from "react-router-dom"; // ✅ Added Link
+import { signupUser } from "./authServices";
+import smartEdgeLogoBlue from "../../assets/images/smartEdgeLogoBlue.png";
 
 const Signup = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Simulated signup handler (replace with your own auth logic)
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // For demo purposes, consider signup successful if all fields are filled.
-    if (name && email && password) {
-      // In a real app, you would send a request to your backend here.
-      navigate("/dashboard"); // Redirect to a dashboard or home page after signup.
-    } else {
-      setError("Please fill all the fields");
+    setError("");
+
+    try {
+      await signupUser(form);
+      navigate("/login");
+    } catch (err) {
+      setError(err.response?.data?.error || "Signup failed");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8 space-y-6">
-        {/* Logo and Heading */}
-        <div className="flex flex-col items-center">
-          <img src={smartEdgeLogoBlue} alt="Smart Edge Logo" className=" h-10 mb-4" />
-          <h2 className="text-2xl font-bold text-gray-800">Create Your Account</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <div className="flex justify-center mb-4">
+          <img src={smartEdgeLogoBlue} alt="SmartEdge Logo" className="h-10" />
         </div>
+        <h2 className="text-xl font-bold text-center mb-4">Create an Account</h2>
+        {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
 
-        {/* Error Message */}
-        {error && (
-          <div className="text-red-500 text-center text-sm">
-            {error}
-          </div>
-        )}
-
-        {/* Signup Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="name" className="sr-only">
-                Full Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="appearance-none rounded-t-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                placeholder="Full Name"
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none rounded-b-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                placeholder="Password"
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300"
-            >
-              Sign Up
-            </button>
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            name="name"
+            type="text"
+            placeholder="Name"
+            value={form.name}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-md"
+          />
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-md"
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-md"
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+          >
+            Sign Up
+          </button>
         </form>
 
-        {/* Links */}
-        <div className="flex justify-between text-sm">
-          <p className="text-gray-600">
+        <div className="mt-6 text-center text-sm">
+          <p>
             Already have an account?{" "}
-            <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500">
-              Log in
+            <Link to="/login" className="text-blue-600 hover:underline">
+              Login
             </Link>
           </p>
-        </div>
-
-        {/* Back to Home Button */}
-        <div className="flex justify-center text-sm mt-4">
-          <Link to="/" className="font-medium text-blue-600 hover:text-blue-500">
-            Back to Home
-          </Link>
+          <p className="mt-2">
+            <Link to="/" className="text-blue-600 hover:underline">
+              Back to Home
+            </Link>
+          </p>
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ const AirpodsHero = () => {
   useEffect(() => {
     const fetchHeroImage = async () => {
       try {
-        const res = await axios.get("https://smartedge-backend-production.up.railway.app/api/products/airpods-pro"); // Ensure name matches MongoDB
+        const res = await axios.get("https://smartedge-backend-production-b679.up.railway.app/api/products/airpods-pro"); // Ensure name matches MongoDB
         setImageUrl(res.data.imageUrl);
       } catch (error) {
         console.error("Error fetching hero image:", error);

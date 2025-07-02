@@ -4,10 +4,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./App.css";
 
-// Import AuthProvider
+// ✅ Providers
 import { AuthProvider } from "./pages/authentications/authContext";
+import { CartProvider } from "./pages/cart/cartContext"; // 👈 Make sure you split useCart into separate file if needed
 
-// Import your pages
+// ✅ Pages
 import Home from "./pages/homepage/home";
 import Airpods from "./pages/airpods/airpods";
 import Chargers from "./pages/chargers/chargers";
@@ -20,6 +21,7 @@ import AirpodsModelPage from "./pages/airpods/components/airpodsModelPage";
 import MagSafeModelPage from "./pages/chargers/components/magSafeModelPage";
 import SmartWatchModelPage from "./pages/smart-watches/components/smartWatchesModelPage";
 
+// ✅ Reusable Components
 import Loader from "./loader";
 
 function App() {
@@ -41,22 +43,24 @@ function App() {
 
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/airpods" element={<Airpods />} />
-          <Route path="/chargers" element={<Chargers />} />
-          <Route path="/smart-watches" element={<SmartWatches />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/airpods-3d" element={<AirpodsModelPage />} />
-          <Route path="/magSafe-3d" element={<MagSafeModelPage />} />
-          <Route path="/smartWatch-3d" element={<SmartWatchModelPage />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Router>
+      <CartProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/airpods" element={<Airpods />} />
+            <Route path="/chargers" element={<Chargers />} />
+            <Route path="/smart-watches" element={<SmartWatches />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/airpods-3d" element={<AirpodsModelPage />} />
+            <Route path="/magSafe-3d" element={<MagSafeModelPage />} />
+            <Route path="/smartWatch-3d" element={<SmartWatchModelPage />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Router>
+      </CartProvider>
     </AuthProvider>
   );
 }

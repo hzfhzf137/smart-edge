@@ -17,7 +17,9 @@ const Airpods = () => {
     if (navbar) setNavHeight(navbar.offsetHeight);
 
     // 👇 Fetch product data
-    axios.get(`${import.meta.env.VITE_API_BASE_URL}/products`)
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/products`, {
+      withCredentials: true
+    })
       .then((res) => {
         // If multiple products, filter the one for AirPods
         const airpods = res.data.find(p => p.name === "AirPods Pro");

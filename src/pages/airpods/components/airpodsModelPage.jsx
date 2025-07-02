@@ -18,7 +18,9 @@ export default function AirpodsModelPage() {
   const [modelUrl, setModelUrl] = useState(null);
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_BASE_URL}/products`)
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/products`, {
+      withCredentials: true
+    })
       .then(res => {
         const airpods = res.data.find(p => p.name === "AirPods Pro");
         if (airpods) setModelUrl(airpods.modelUrl);

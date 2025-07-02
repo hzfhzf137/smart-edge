@@ -11,7 +11,9 @@ const AirpodsFeaturesAndGallery = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/products/airpods pro`);
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/products/airpods pro`, {
+          withCredentials: true
+        });
         if (Array.isArray(res.data.galleryImages)) {
           setImages(res.data.galleryImages);
         } else if (typeof res.data.galleryImages === "string") {
@@ -97,9 +99,8 @@ const AirpodsFeaturesAndGallery = () => {
               <div
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full cursor-pointer ${
-                  index === currentIndex ? "bg-blue-600" : "bg-gray-300"
-                }`}
+                className={`w-3 h-3 rounded-full cursor-pointer ${index === currentIndex ? "bg-blue-600" : "bg-gray-300"
+                  }`}
               />
             ))}
           </div>

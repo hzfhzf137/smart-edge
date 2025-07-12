@@ -20,6 +20,10 @@ import CartPage from "./pages/cart/cartPage";
 import AirpodsModelPage from "./pages/airpods/components/airpodsModelPage";
 import MagSafeModelPage from "./pages/chargers/components/magSafeModelPage";
 import SmartWatchModelPage from "./pages/smart-watches/components/smartWatchesModelPage";
+import CheckoutPage from "./pages/checkout/checkoutPage";
+import SuccessModal from "./pages/checkout/sucessModel";
+
+
 
 // ✅ Reusable Components
 import Loader from "./loader";
@@ -57,6 +61,10 @@ function App() {
             <Route path="/airpods-3d" element={<AirpodsModelPage />} />
             <Route path="/magSafe-3d" element={<MagSafeModelPage />} />
             <Route path="/smartWatch-3d" element={<SmartWatchModelPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/success" element={<SuccessModal />} />
+            <Route path="/cancel" element={<h2>❌ Payment Cancelled</h2>} />
+
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Router>

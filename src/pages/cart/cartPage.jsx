@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useCart } from "../cart/useCart"; // ✅ Use actual cart context
+import { useCart } from "../cart/useCart";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const { cartItems, updateQuantity, clearCart } = useCart(); // ✅ Get cart functions
+  const { cartItems, updateQuantity, clearCart } = useCart();
+  const navigate = useNavigate();
 
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -12,7 +14,6 @@ const CartPage = () => {
 
   return (
     <div>
-      {/* Toggle Cart Panel (For Demo Only) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="m-4 p-2 bg-blue-600 text-white rounded"
@@ -20,7 +21,6 @@ const CartPage = () => {
         {isOpen ? "Close Cart" : "Open Cart"}
       </button>
 
-      {/* Cart Slider */}
       <div
         className={`fixed top-0 right-0 h-full bg-white shadow-lg z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
@@ -37,7 +37,6 @@ const CartPage = () => {
           </button>
         </div>
 
-        {/* Cart Items */}
         <div
           className="p-4 overflow-y-auto"
           style={{ maxHeight: "calc(100% - 160px)" }}
@@ -73,7 +72,6 @@ const CartPage = () => {
           )}
         </div>
 
-        {/* Cart Footer */}
         <div className="p-4 border-t border-gray-300">
           <div className="flex justify-between items-center mb-4">
             <span className="font-medium">Total:</span>
@@ -86,10 +84,7 @@ const CartPage = () => {
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-blue-600 text-white hover:bg-blue-700"
             }`}
-            onClick={() => {
-              alert("Proceeding to checkout with real cart data...");
-              // Optional: clearCart(); or navigate to payment
-            }}
+            onClick={() => navigate("/checkout")}
           >
             Proceed to Checkout
           </button>

@@ -21,6 +21,8 @@ import AirpodsModelPage from "./pages/airpods/components/airpodsModelPage";
 import MagSafeModelPage from "./pages/chargers/components/magSafeModelPage";
 import SmartWatchModelPage from "./pages/smart-watches/components/smartWatchesModelPage";
 import CheckoutPage from "./pages/checkout/checkoutPage";
+import ReceiptPage from "./pages/checkout/receiptPage";
+
 
 
 
@@ -62,6 +64,7 @@ function App() {
             <Route path="/magSafe-3d" element={<MagSafeModelPage />} />
             <Route path="/smartWatch-3d" element={<SmartWatchModelPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/receipt/:orderId" element={<ReceiptPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Router>

@@ -1,17 +1,26 @@
-import React from "react";
+// src/pages/contactUs/contactUs.jsx
+import React, { useEffect } from "react";
 import Navbar from "../reuseableComponents/navbar";
 import Footer from "../reuseableComponents/footer";
+import MapComponent from "./components/mapComponent";
+import Address from "./components/address";
+import ContactUsForm from "./components/contactUsForm";
 
 const ContactUs = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <React.Fragment>
-        <Navbar/>
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold text-gray-800">Contact Us</h1>
-      {/* Add more details about Airpods as needed */}
-    </div>
-    <Footer/>
-    </React.Fragment>
+    <>
+      <Navbar />
+      <MapComponent />
+      <div className="flex flex-col md:flex-row w-screen">
+        <Address />
+        <ContactUsForm />
+      </div>
+      <Footer />
+    </>
   );
 };
 

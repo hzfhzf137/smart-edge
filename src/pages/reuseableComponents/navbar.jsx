@@ -54,9 +54,8 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const iconClasses = `text-sm sm:text-md md:text-lg pr-1 transition duration-300 ${
-    isScrolled ? "text-blue-600" : "text-white"
-  }`;
+  const iconClasses = `text-sm sm:text-md md:text-lg pr-1 transition duration-300 ${isScrolled ? "text-blue-600" : "text-white"
+    }`;
 
   // ✅ Calculate Total Quantity of Cart Items
   const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
@@ -68,9 +67,8 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300 ${
-        isScrolled ? "bg-gray-300" : "bg-blue-900 bg-opacity-50"
-      } pr-2 pl-2`}
+      className={`fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300 ${isScrolled ? "bg-gray-300" : "bg-blue-900 bg-opacity-50"
+        } pr-2 pl-2`}
     >
       <nav className="flex items-center justify-between p-2 sm:p-3 md:p-4">
         <Link to="/">
@@ -261,11 +259,10 @@ const Navbar = () => {
                   toggleCart();
                   navigate("/checkout");
                 }}
-                className={`w-full py-2 rounded-md transition duration-300 ${
-                  cartItems.length === 0
+                className={`w-full py-2 rounded-md transition duration-300 ${cartItems.length === 0
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-blue-600 text-white hover:bg-blue-700"
-                }`}
+                  }`}
               >
                 Proceed to Checkout
               </button>

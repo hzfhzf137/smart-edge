@@ -58,6 +58,9 @@ const Navbar = () => {
     isScrolled ? "text-blue-600" : "text-white"
   }`;
 
+  // ✅ Calculate Total Quantity of Cart Items
+  const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -88,9 +91,21 @@ const Navbar = () => {
           >
             <FaExpand />
           </button>
-          <button onClick={toggleCart} className={iconClasses}>
-            <FaShoppingCart />
-          </button>
+
+          {/* ✅ Cart Icon with Badge */}
+          <div className="relative">
+            <button onClick={toggleCart} className={iconClasses}>
+              <FaShoppingCart />
+              {totalQuantity > 0 && (
+                <span
+                  key={totalQuantity} // triggers reanimation
+                  className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full animate-bounce"
+                >
+                  {totalQuantity}
+                </span>
+              )}
+            </button>
+          </div>
 
           {loading ? (
             <span className={`${iconClasses} italic`}>...</span>

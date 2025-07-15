@@ -18,7 +18,7 @@ const CheckoutPage = () => {
   });
 
   const [paymentMethod, setPaymentMethod] = useState("card");
-  const [termsAccepted, setTermsAccepted] = useState(false); // ✅ New state for checkbox
+  const [termsAccepted, setTermsAccepted] = useState(false); 
 
   const handleChange = (e) => {
     setShippingDetails({ ...shippingDetails, [e.target.name]: e.target.value });

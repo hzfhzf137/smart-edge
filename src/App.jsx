@@ -4,11 +4,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./App.css";
 
-// ✅ Providers
+// Providers
 import { AuthProvider } from "./pages/authentications/authContext";
-import { CartProvider } from "./pages/cart/cartContext"; // 👈 Make sure you split useCart into separate file if needed
+import { CartProvider } from "./pages/cart/cartContext"; 
 
-// ✅ Pages
+// Pages
 import Home from "./pages/homepage/home";
 import Airpods from "./pages/airpods/airpods";
 import Chargers from "./pages/chargers/chargers";
@@ -23,11 +23,7 @@ import SmartWatchModelPage from "./pages/smart-watches/components/smartWatchesMo
 import CheckoutPage from "./pages/checkout/checkoutPage";
 import ReceiptPage from "./pages/checkout/receiptPage";
 
-
-
-
-
-// ✅ Reusable Components
+// Reusable Components
 import Loader from "./loader";
 
 function App() {

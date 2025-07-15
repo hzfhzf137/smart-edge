@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { loginUser } from './authServices';
 import { AuthContext } from './authContext';
-import smartEdgeLogoBlue from '../../assets/images/smartEdgeLogoBlue.png'; // ✅ Logo import
+import smartEdgeLogoBlue from '../../assets/images/smartEdgeLogoBlue.png';
 
 const Login = () => {
   const { loadUser } = useContext(AuthContext);
@@ -31,7 +31,7 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        {/* ✅ Logo on top */}
+        {/* Logo on top */}
         <div className="flex justify-center mb-4">
           <img src={smartEdgeLogoBlue} alt="SmartEdge Logo" className="h-10" />
         </div>

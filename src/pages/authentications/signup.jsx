@@ -1,6 +1,6 @@
 // src/pages/authentications/signup.jsx
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // ✅ Added Link
+import { useNavigate, Link } from "react-router-dom"; 
 import { signupUser } from "./authServices";
 import smartEdgeLogoBlue from "../../assets/images/smartEdgeLogoBlue.png";
 

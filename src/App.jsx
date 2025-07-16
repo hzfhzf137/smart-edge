@@ -22,6 +22,7 @@ import MagSafeModelPage from "./pages/chargers/components/magSafeModelPage";
 import SmartWatchModelPage from "./pages/smart-watches/components/smartWatchesModelPage";
 import CheckoutPage from "./pages/checkout/checkoutPage";
 import ReceiptPage from "./pages/checkout/receiptPage";
+import Chatbot from "./pages/chatbot/chatbot";
 
 // Reusable Components
 import Loader from "./loader";
@@ -63,6 +64,7 @@ function App() {
             <Route path="/receipt/:orderId" element={<ReceiptPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
+          <Chatbot />
         </Router>
       </CartProvider>
     </AuthProvider>

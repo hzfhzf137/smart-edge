@@ -1,3 +1,4 @@
+//src/pages/airpods/components/airpodsAddToCart.jsx
 import React, { useState, useContext, useEffect } from "react";
 import { useCart } from "../../cart/useCart";
 import { AuthContext } from "../../authentications/authContext";

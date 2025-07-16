@@ -1,3 +1,4 @@
+//src/pages/airpods/airpods.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../reuseableComponents/navbar";

@@ -1,3 +1,5 @@
+//src/pages/chargers/chargersFeaturesAndGallery.jsx
+
 import React, { useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom"; // <-- import Link to navigate

@@ -1,4 +1,3 @@
-// src/pages/authentications/authContext.jsx
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 import { fetchUser, logoutUser } from './authServices';
 
@@ -6,7 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Optional: to track load state
+  const [loading, setLoading] = useState(true);
 
   const loadUser = useCallback(async () => {
     try {
@@ -22,6 +21,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await logoutUser();
+      localStorage.removeItem('smartedge_token'); // ✅ Clear token from Safari
       setUser(null);
     } catch (err) {
       console.error('Logout failed:', err);

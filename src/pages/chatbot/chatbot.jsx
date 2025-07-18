@@ -1,165 +1,110 @@
-import React, { useState, useContext, useEffect } from "react";
-import { AuthContext } from "../authentications/authContext";
-import { FaComments, FaTimes } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { authFetch } from '../../utils/authfetch';
 
 const Chatbot = () => {
-  const { user } = useContext(AuthContext);
-  const [messages, setMessages] = useState([]);
-  const [userInput, setUserInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [chatLog, setChatLog] = useState([]);
+  const [userInput, setUserInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch previous chat history if logged in
+  // Fetch chat history on mount
   useEffect(() => {
     const fetchChatHistory = async () => {
-      if (!user) return;
-
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/chatbot`, {
-          credentials: "include",
-        });
+        const res = await authFetch(`${import.meta.env.VITE_API_BASE_URL}/chatbot`);
         const data = await res.json();
-        if (data.messages) {
-          setMessages(data.messages);
-        }
+        setChatLog(data);
       } catch (err) {
-        console.error("Failed to load chat history:", err);
+        console.error('Error fetching chat history:', err);
       }
     };
 
     fetchChatHistory();
-  }, [user]);
+  }, []);
 
-  // Send message
-  const handleSend = async () => {
-    if (!userInput.trim() || !user) return;
+  // Handle user input submit
+  const handleSend = async (e) => {
+    e.preventDefault();
 
-    const newMessages = [...messages, { sender: "user", text: userInput }];
-    setMessages(newMessages);
-    setLoading(true);
-    setUserInput("");
+    if (!userInput.trim()) return;
+
+    const newUserMessage = { sender: 'user', message: userInput };
+    setChatLog((prev) => [...prev, newUserMessage]);
+    setIsLoading(true);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/chatbot`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+      const res = await authFetch(`${import.meta.env.VITE_API_BASE_URL}/chatbot`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userInput }),
       });
 
       const data = await res.json();
-      setMessages([...newMessages, { sender: "bot", text: data.reply }]);
+      const botMessage = { sender: 'bot', message: data.message };
+
+      setChatLog((prev) => [...prev, botMessage]);
+      setUserInput('');
     } catch (err) {
-      console.error(err);
-      setMessages([
-        ...newMessages,
-        { sender: "bot", text: "⚠️ Could not get a response from the server." },
-      ]);
+      console.error('Error sending message:', err);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  // Clear chat (with confirmation)
   const handleClearChat = async () => {
-    const confirmClear = window.confirm("Are you sure you want to delete all chat messages?");
-    if (!confirmClear) return;
-
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/chatbot`, {
-        method: "DELETE",
-        credentials: "include",
+      await authFetch(`${import.meta.env.VITE_API_BASE_URL}/chatbot`, {
+        method: 'DELETE',
       });
-
-      if (res.ok) {
-        setMessages([]);
-      } else {
-        alert("Failed to clear chat.");
-      }
+      setChatLog([]);
     } catch (err) {
-      console.error("Error clearing chat:", err);
-      alert("Something went wrong.");
+      console.error('Error clearing chat:', err);
     }
-  };
-
-  // Toggle chatbot visibility
-  const toggleChat = () => {
-    setIsOpen((prev) => !prev);
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      {/* Floating Button */}
-      <button
-        onClick={toggleChat}
-        className="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg"
-        title="Chat with Smart Edge"
-      >
-        {isOpen ? <FaTimes /> : <FaComments />}
-      </button>
-
-      {/* Chat Window */}
-      {isOpen && (
-        <div className="w-80 mt-3 bg-white border rounded-lg shadow-lg flex flex-col max-h-[480px]">
-          <div className="bg-blue-600 text-white px-4 py-2 font-semibold rounded-t-md">
-            💬 Smart Edge Chatbot
-          </div>
-
-          <div className="flex-1 px-3 py-2 overflow-y-auto space-y-2" style={{ maxHeight: "300px" }}>
-            {!user ? (
-              <div className="text-center text-gray-500 py-10">
-                Please <span className="font-medium text-blue-600">log in</span> to use the chatbot.
-              </div>
-            ) : (
-              <>
-                {messages.map((m, i) => (
-                  <div
-                    key={i}
-                    className={`text-sm max-w-[80%] px-3 py-2 rounded ${
-                      m.sender === "user"
-                        ? "ml-auto bg-blue-100 text-right"
-                        : "bg-gray-100 text-left"
-                    }`}
-                  >
-                    {m.text}
-                  </div>
-                ))}
-                {loading && <div className="text-gray-500 text-sm">Bot is typing...</div>}
-              </>
-            )}
-          </div>
-
-          {/* Clear Button */}
-          {user && messages.length > 0 && (
-            <button
-              onClick={handleClearChat}
-              className="text-sm text-red-600 hover:underline px-3 py-1 text-left"
-            >
-              🗑️ Clear Chat
-            </button>
-          )}
-
-          {/* Input */}
-          {user && (
-            <div className="flex items-center p-2 border-t">
-              <input
-                type="text"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder="Ask me anything..."
-                className="flex-1 px-2 py-1 border rounded text-sm"
-              />
-              <button
-                onClick={handleSend}
-                className="ml-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+    <div className="min-h-screen bg-[#0a0f24] text-white px-4 py-6">
+      <h1 className="text-3xl font-bold mb-4">SmartEdge AI Assistant</h1>
+      <div className="bg-[#11182f] rounded-lg p-4 h-[60vh] overflow-y-auto mb-4 shadow">
+        {chatLog.length === 0 ? (
+          <p className="text-gray-400">No messages yet.</p>
+        ) : (
+          chatLog.map((entry, index) => (
+            <div key={index} className={`mb-3 ${entry.sender === 'user' ? 'text-right' : 'text-left'}`}>
+              <span
+                className={`inline-block px-3 py-2 rounded-lg ${
+                  entry.sender === 'user' ? 'bg-orange-500 text-white' : 'bg-gray-700 text-white'
+                }`}
               >
-                Send
-              </button>
+                {entry.message}
+              </span>
             </div>
-          )}
-        </div>
-      )}
+          ))
+        )}
+      </div>
+
+      <form onSubmit={handleSend} className="flex items-center gap-2">
+        <input
+          type="text"
+          placeholder="Ask me anything..."
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          className="flex-1 bg-[#11182f] border border-gray-700 rounded px-4 py-2 text-white focus:outline-none"
+        />
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded text-white font-semibold"
+        >
+          {isLoading ? 'Thinking...' : 'Send'}
+        </button>
+        <button
+          type="button"
+          onClick={handleClearChat}
+          className="ml-2 bg-gray-600 hover:bg-gray-700 px-3 py-2 rounded text-white"
+        >
+          Clear
+        </button>
+      </form>
     </div>
   );
 };

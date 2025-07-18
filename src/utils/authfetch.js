@@ -1,16 +1,15 @@
 // src/utils/authFetch.js
-
 export const authFetch = (url, options = {}) => {
-  const token = localStorage.getItem('smartedge_token');
+  const token = localStorage.getItem("smartedge_token");
 
   const headers = {
     ...(options.headers || {}),
-    ...(token && { Authorization: `Bearer ${token}` }), // Fallback for Safari
+    ...(token && { Authorization: `Bearer ${token}` }),
   };
 
   return fetch(url, {
     ...options,
-    credentials: 'include', // Always include cookies
+    credentials: "include",
     headers,
   });
 };

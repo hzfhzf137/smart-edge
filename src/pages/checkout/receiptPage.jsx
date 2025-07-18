@@ -8,8 +8,16 @@ const ReceiptPage = () => {
 
   useEffect(() => {
     const fetchOrder = async () => {
+      const token = localStorage.getItem("token");
+      const headers = {
+        ...(token && { Authorization: `Bearer ${token}` }),
+      };
+
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders/${orderId}`);
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders/${orderId}`, {
+          headers,
+          credentials: "include",
+        });
         const data = await res.json();
         setOrder(data);
       } catch (err) {
@@ -22,48 +30,31 @@ const ReceiptPage = () => {
     fetchOrder();
   }, [orderId]);
 
-  if (loading) return <div className="text-center py-10">Loading receipt...</div>;
-
-  // ✅ Fallback if order or critical data is missing
-  if (!order || !order.shippingDetails || !order.cartItems) {
-    return <div className="text-center py-10 text-red-600">Order not found or invalid.</div>;
-  }
+  if (loading) return <div className="p-6 text-white">Loading receipt...</div>;
+  if (!order) return <div className="p-6 text-red-500">Order not found.</div>;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10 space-y-6">
-      <h1 className="text-3xl font-bold text-green-700 text-center">🧾 Order Receipt</h1>
+    <div className="min-h-screen bg-[#0a0f24] text-white flex flex-col items-center justify-center p-6">
+      <div className="bg-[#11182f] p-6 rounded-lg w-full max-w-md shadow-md">
+        <h1 className="text-3xl font-bold mb-4">Order Receipt</h1>
+        <p><strong>Order ID:</strong> {order._id}</p>
+        <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
+        <p><strong>Name:</strong> {order.shippingDetails.name}</p>
+        <p><strong>Address:</strong> {order.shippingDetails.address}, {order.shippingDetails.city}, {order.shippingDetails.country}</p>
 
-      {/* Shipping Info */}
-      <div className="bg-white p-6 shadow rounded space-y-4">
-        <h2 className="text-xl font-semibold">Shipping Info</h2>
-        <p><strong>Name:</strong> {order.shippingDetails.fullName}</p>
-        <p><strong>Address:</strong> {order.shippingDetails.address}, {order.shippingDetails.city}, {order.shippingDetails.postalCode}</p>
-        <p><strong>Phone:</strong> {order.shippingDetails.phone}</p>
-        <p><strong>Payment Method:</strong> {order.paymentMethod === "cod" ? "Cash on Delivery (COD)" : "Card Payment (Stripe)"}</p>
+        <h2 className="text-xl mt-6 mb-2 font-semibold">Items</h2>
+        <ul className="list-disc ml-5">
+          {order.cartItems.map((item, index) => (
+            <li key={index}>
+              {item.name} x {item.quantity} – ${item.price}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      {/* Cart Items */}
-      <div className="bg-white p-6 shadow rounded space-y-4">
-        <h2 className="text-xl font-semibold">Order Items</h2>
-        {order.cartItems.map((item, idx) => (
-          <div key={idx} className="flex justify-between border-b pb-2">
-            <span>{item.name} × {item.quantity}</span>
-            <span>${(item.price * item.quantity).toFixed(2)}</span>
-          </div>
-        ))}
-        <div className="text-right font-bold text-lg pt-4">
-          Total: ${order.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2)}
-        </div>
-      </div>
-
-      <div className="text-center">
-        <Link
-          to="/"
-          className="mt-4 inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded"
-        >
-          Back to Home
-        </Link>
-      </div>
+      <Link to="/" className="mt-6 text-blue-400 underline hover:text-blue-300">
+        ← Back to Home
+      </Link>
     </div>
   );
 };

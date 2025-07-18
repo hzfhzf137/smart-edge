@@ -5,118 +5,117 @@ import { AuthContext } from "../authentications/authContext";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const { user, loading } = useContext(AuthContext);
-    const [cartItems, setCartItems] = useState([]);
+  const { user, loading } = useContext(AuthContext);
+  const [cartItems, setCartItems] = useState([]);
 
-    const API_BASE = import.meta.env.VITE_API_BASE_URL;
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-    // ✅ Load Cart from Backend
-    useEffect(() => {
-        const fetchCart = async () => {
-            if (loading) return; // ⛔ wait until user loading completes
-            if (!user) {
-                setCartItems([]);
-                return;
-            }
+  // 🔐 Create headers for hybrid auth (cookie + localStorage token)
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem("token");
+    return {
+      withCredentials: true,
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    };
+  };
 
-            try {
-                const res = await axios.get(`${API_BASE}/cart`, {
-                    withCredentials: true,
-                });
-                console.log("✅ Cart fetched:", res.data.cart);
-                setCartItems(res.data.cart || []);
-            } catch (err) {
-                console.error("Failed to load cart:", err.message);
-            }
-        };
+  useEffect(() => {
+    const fetchCart = async () => {
+      if (loading) return;
+      if (!user) {
+        setCartItems([]);
+        return;
+      }
 
-        fetchCart();
-    }, [user, loading]);
-
-
-    // ✅ Save Cart to Backend whenever cartItems change
-    useEffect(() => {
-        const saveCart = async () => {
-            if (!user) return;
-
-            try {
-                await axios.post(
-                    `${API_BASE}/cart`,
-                    { cart: cartItems },
-                    { withCredentials: true }
-                );
-            } catch (err) {
-                console.error("Failed to save cart:", err.message);
-            }
-        };
-
-        if (user) {
-            saveCart();
-        }
-    }, [cartItems, user]);
-
-    // ✅ Add or Update Item
-    const addToCart = (product) => {
-        setCartItems((prevItems) => {
-            const existingItem = prevItems.find((item) => item.productId === product.productId);
-            if (existingItem) {
-                return prevItems.map((item) =>
-                    item.productId === product.productId
-                        ? { ...item, quantity: item.quantity + product.quantity }
-                        : item
-                );
-            } else {
-                return [...prevItems, { ...product }];
-            }
-        });
+      try {
+        const res = await axios.get(`${API_BASE}/cart`, getAuthHeaders());
+        console.log("✅ Cart fetched:", res.data.cart);
+        setCartItems(res.data.cart || []);
+      } catch (err) {
+        console.error("❌ Failed to load cart:", err.message);
+      }
     };
 
-    // ✅ Increase Quantity
-    const increaseQuantity = (productId) => {
-        setCartItems((prevItems) =>
-            prevItems.map((item) =>
-                item.productId === productId
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item
-            )
+    fetchCart();
+  }, [user, loading]);
+
+  useEffect(() => {
+    const saveCart = async () => {
+      if (!user) return;
+
+      try {
+        await axios.post(
+          `${API_BASE}/cart`,
+          { cart: cartItems },
+          getAuthHeaders()
         );
+      } catch (err) {
+        console.error("❌ Failed to save cart:", err.message);
+      }
     };
 
-    // ✅ Decrease Quantity or Remove if 0
-    const decreaseQuantity = (productId) => {
-        setCartItems((prevItems) =>
-            prevItems
-                .map((item) =>
-                    item.productId === productId
-                        ? { ...item, quantity: item.quantity - 1 }
-                        : item
-                )
-                .filter((item) => item.quantity > 0)
+    if (user) saveCart();
+  }, [cartItems, user]);
+
+  const addToCart = (product) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find(
+        (item) => item.productId === product.productId
+      );
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.productId === product.productId
+            ? { ...item, quantity: item.quantity + product.quantity }
+            : item
         );
-    };
+      } else {
+        return [...prevItems, { ...product }];
+      }
+    });
+  };
 
-    // ✅ Remove from Cart
-    const removeFromCart = (productId) => {
-        setCartItems((prevItems) =>
-            prevItems.filter((item) => item.productId !== productId)
-        );
-    };
-
-    // ✅ Clear Cart
-    const clearCart = () => setCartItems([]);
-
-    return (
-        <CartContext.Provider
-            value={{
-                cartItems,
-                addToCart,
-                clearCart,
-                increaseQuantity,
-                decreaseQuantity,
-                removeFromCart,
-            }}
-        >
-            {children}
-        </CartContext.Provider>
+  const increaseQuantity = (productId) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.productId === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
     );
+  };
+
+  const decreaseQuantity = (productId) => {
+    setCartItems((prevItems) =>
+      prevItems
+        .map((item) =>
+          item.productId === productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
+  const removeFromCart = (productId) => {
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.productId !== productId)
+    );
+  };
+
+  const clearCart = () => setCartItems([]);
+
+  return (
+    <CartContext.Provider
+      value={{
+        cartItems,
+        addToCart,
+        clearCart,
+        increaseQuantity,
+        decreaseQuantity,
+        removeFromCart,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 };

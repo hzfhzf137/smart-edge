@@ -1,180 +1,119 @@
-import React, { useState, useEffect } from "react";
-import { useCart } from "../cart/useCart";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { CartContext } from "../cart/cartContext";
 import { loadStripe } from "@stripe/stripe-js";
+import { useNavigate, Link } from "react-router-dom";
+import { AuthContext } from "../authentications/authContext";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const CheckoutPage = () => {
-    useEffect(() => {
-        window.scrollTo(0, 0);  
-    }, []);
-    
-    const { cartItems, clearCart } = useCart();
-    const navigate = useNavigate();
+  const { cartItems, clearCart } = useContext(CartContext);
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-    const [shippingDetails, setShippingDetails] = useState({
-        fullName: "",
-        address: "",
-        city: "",
-        postalCode: "",
-        phone: "",
-    });
+  const [shippingDetails, setShippingDetails] = useState({
+    name: currentUser?.name || "",
+    address: "",
+    city: "",
+    postalCode: "",
+    country: "",
+  });
 
-    const [paymentMethod, setPaymentMethod] = useState("card");
-    const [termsAccepted, setTermsAccepted] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("cod");
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
-    const handleChange = (e) => {
-        setShippingDetails({ ...shippingDetails, [e.target.name]: e.target.value });
-    };
+  const handleChange = (e) => {
+    setShippingDetails({ ...shippingDetails, [e.target.name]: e.target.value });
+  };
 
-    const handlePaymentMethodChange = (e) => {
-        setPaymentMethod(e.target.value);
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const totalPrice = cartItems.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
+    const allFieldsFilled = Object.values(shippingDetails).every(
+      (field) => field.trim() !== ""
     );
+    if (!allFieldsFilled) return alert("Please fill in all the fields.");
+    if (!termsAccepted) return alert("Please accept the terms and conditions.");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const token = localStorage.getItem("token");
+    const headers = {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+    };
 
-        const allFieldsFilled = Object.values(shippingDetails).every(
-            (field) => field.trim() !== ""
-        );
-        if (!allFieldsFilled) return alert("Please fill in all the fields.");
+    if (paymentMethod === "cod") {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders`, {
+          method: "POST",
+          headers,
+          credentials: "include",
+          body: JSON.stringify({
+            cartItems,
+            shippingDetails,
+            paymentMethod: "cod",
+          }),
+        });
 
-        if (!termsAccepted) return alert("Please accept the terms and conditions.");
-
-        if (paymentMethod === "cod") {
-            try {
-                const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/orders`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    credentials: "include",
-                    body: JSON.stringify({
-                        cartItems,
-                        shippingDetails,
-                        paymentMethod: "cod",
-                    }),
-                });
-
-                const data = await res.json();
-                if (res.ok) {
-                    clearCart();
-                    navigate(`/receipt/${data.order._id}`);
-                } else {
-                    alert("❌ Failed to place order: " + data.error);
-                }
-            } catch (err) {
-                console.error("❌ Error placing order:", err);
-                alert("Something went wrong.");
-            }
+        const data = await res.json();
+        if (res.ok) {
+          clearCart();
+          navigate(`/receipt/${data.order._id}`);
         } else {
-            const stripe = await stripePromise;
-            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/payments/create-checkout-session`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ cartItems, shippingDetails }),
-            });
-            const data = await res.json();
-
-            if (data.url) {
-                window.location.href = data.url;
-            } else {
-                alert("❌ Payment session creation failed.");
-            }
+          alert("❌ Failed to place order: " + data.error);
         }
-    };
+      } catch (err) {
+        console.error("❌ Error placing order:", err);
+        alert("Something went wrong.");
+      }
+    } else {
+      const stripe = await stripePromise;
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/payments/create-checkout-session`, {
+        method: "POST",
+        headers,
+        credentials: "include",
+        body: JSON.stringify({ cartItems, shippingDetails }),
+      });
+      const data = await res.json();
 
-    return (
-        <div className="max-w-3xl mx-auto px-4 py-10 space-y-8">
-            <h1 className="text-3xl font-bold mb-6">Checkout</h1>
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("❌ Payment session creation failed.");
+      }
+    }
+  };
 
-            {/* Cart Summary */}
-            <div className="bg-white shadow-md p-6 rounded">
-                <h2 className="text-xl font-semibold mb-4">Your Items</h2>
-                {cartItems.map((item) => (
-                    <div key={item.productId} className="flex justify-between mb-2">
-                        <span>{item.name} × {item.quantity}</span>
-                        <span>${(item.price * item.quantity).toFixed(2)}</span>
-                    </div>
-                ))}
-                <hr className="my-3" />
-                <div className="flex justify-between font-bold text-lg">
-                    <span>Total:</span>
-                    <span>${totalPrice.toFixed(2)}</span>
-                </div>
-            </div>
+  return (
+    <div className="min-h-screen bg-[#0a0f24] text-white flex flex-col items-center justify-center p-6">
+      <h1 className="text-3xl font-bold mb-6">Checkout</h1>
 
-            {/* Shipping Form */}
-            <form className="bg-white shadow-md p-6 rounded space-y-4" onSubmit={handleSubmit}>
-                <h2 className="text-xl font-semibold mb-2">Shipping Details</h2>
-                <input type="text" name="fullName" placeholder="Full Name" required value={shippingDetails.fullName} onChange={handleChange} className="w-full border px-3 py-2 rounded" />
-                <input type="text" name="address" placeholder="Address" required value={shippingDetails.address} onChange={handleChange} className="w-full border px-3 py-2 rounded" />
-                <input type="text" name="city" placeholder="City" required value={shippingDetails.city} onChange={handleChange} className="w-full border px-3 py-2 rounded" />
-                <input type="text" name="postalCode" placeholder="Postal Code" required value={shippingDetails.postalCode} onChange={handleChange} className="w-full border px-3 py-2 rounded" />
-                <input type="tel" name="phone" placeholder="Phone Number" required value={shippingDetails.phone} onChange={handleChange} className="w-full border px-3 py-2 rounded" />
+      <form onSubmit={handleSubmit} className="grid gap-4 w-full max-w-md">
+        <input type="text" name="name" value={shippingDetails.name} onChange={handleChange} placeholder="Full Name" className="bg-[#11182f] p-2 rounded" />
+        <input type="text" name="address" value={shippingDetails.address} onChange={handleChange} placeholder="Address" className="bg-[#11182f] p-2 rounded" />
+        <input type="text" name="city" value={shippingDetails.city} onChange={handleChange} placeholder="City" className="bg-[#11182f] p-2 rounded" />
+        <input type="text" name="postalCode" value={shippingDetails.postalCode} onChange={handleChange} placeholder="Postal Code" className="bg-[#11182f] p-2 rounded" />
+        <input type="text" name="country" value={shippingDetails.country} onChange={handleChange} placeholder="Country" className="bg-[#11182f] p-2 rounded" />
 
-                {/* Payment Method */}
-                <div>
-                    <label className="block mb-1 font-semibold text-sm">Payment Method</label>
-                    <select value={paymentMethod} onChange={handlePaymentMethodChange} className="w-full border px-3 py-2 rounded">
-                        <option value="card">Card Payment (Stripe)</option>
-                        <option value="cod">Cash on Delivery (COD)</option>
-                    </select>
-                </div>
+        <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)} className="bg-[#11182f] p-2 rounded">
+          <option value="cod">Cash on Delivery</option>
+          <option value="card">Card Payment</option>
+        </select>
 
-                {/* ✅ Terms Acceptance */}
-                <div className="flex items-start space-x-2">
-                    <input
-                        type="checkbox"
-                        id="terms"
-                        checked={termsAccepted}
-                        onChange={() => setTermsAccepted(!termsAccepted)}
-                        className="mt-1"
-                    />
-                    <label htmlFor="terms" className="text-sm text-gray-700">
-                        I agree to the{" "}
-                        <span className="text-blue-600 underline cursor-pointer">
-                            Smart Edge Terms & Conditions
-                        </span>
-                    </label>
-                </div>
+        <label className="flex items-center gap-2">
+          <input type="checkbox" checked={termsAccepted} onChange={(e) => setTermsAccepted(e.target.checked)} />
+          I accept the terms and conditions.
+        </label>
 
-                {/* Submit Button */}
-                <div className="pt-4">
-                    <button
-                        type="submit"
-                        disabled={!termsAccepted}
-                        className={`w-full font-semibold py-2 px-4 rounded ${termsAccepted
-                                ? "bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
-                                : "bg-gray-400 text-gray-200 cursor-not-allowed"
-                            }`}
-                    >
-                        {paymentMethod === "cod" ? "Place Order" : "Pay Now"}
-                    </button>
-                </div>
-            </form>
+        <button type="submit" className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600">
+          {paymentMethod === "cod" ? "Place Order" : "Pay Now"}
+        </button>
+      </form>
 
-            {/* Terms and Conditions Summary */}
-            <div className="bg-gray-100 p-5 rounded text-sm text-gray-700">
-                <h3 className="text-lg font-bold mb-2">📜 Terms & Conditions – Smart Edge</h3>
-                <ul className="list-disc list-inside space-y-1">
-                    <li>Orders are processed within 1–3 business days.</li>
-                    <li>Cash on Delivery is limited to eligible regions only.</li>
-                    <li>Card payments are handled securely via Stripe.</li>
-                    <li>Returns are only accepted for faulty or damaged products.</li>
-                    <li>All personal data is protected and never shared without consent.</li>
-                </ul>
-            </div>
-
-            <div className="text-center">
-                <Link to="/" className="inline-block text-blue-600 hover:underline text-sm">← Back to Home</Link>
-            </div>
-        </div>
-    );
+      <Link to="/" className="mt-6 text-blue-400 underline hover:text-blue-300">
+        ← Back to Home
+      </Link>
+    </div>
+  );
 };
 
 export default CheckoutPage;

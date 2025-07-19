@@ -4,6 +4,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/smart-edge/',  // Set the base path to your repository name
+  base: '/',  // Set the base path to your repository name
   plugins: [react(), tailwindcss()],
 })

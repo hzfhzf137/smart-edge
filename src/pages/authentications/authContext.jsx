@@ -1,11 +1,11 @@
-//src/pages/authentications/authContext.jsx
+// src/pages/authentications/authContext.jsx
 
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 import { fetchUser, logoutUser } from './authServices';
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await fetchUser();
       setUser(res.data.user);
-    } catch (err) {
+    } catch {
       setUser(null);
     } finally {
       setLoading(false);
@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await logoutUser();
-      localStorage.removeItem('smartedge_token'); // ✅ Clear token from Safari
+      localStorage.removeItem('smartedge_token');
       setUser(null);
     } catch (err) {
       console.error('Logout failed:', err);
@@ -40,3 +40,6 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export { AuthContext };
+export default AuthProvider;

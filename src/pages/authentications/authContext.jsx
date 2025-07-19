@@ -1,3 +1,5 @@
+//src/pages/authentications/authContext.jsx
+
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 import { fetchUser, logoutUser } from './authServices';
 

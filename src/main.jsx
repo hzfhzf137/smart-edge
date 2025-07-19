@@ -1,13 +1,12 @@
-// src/main.jsx
-
-import React, { StrictMode, useEffect } from 'react';
+import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import App from './App';
-import AuthProvider from './pages/authentications/authContext';
-import CartProvider from './pages/cart/cartContext';
-import { useCart } from './pages/cart/useCart';
+import App from './App.jsx';
+import { AuthProvider } from './pages/authentications/authContext';
+import { CartProvider } from './pages/cart/cartContext'; // ✅ fixed
+import { useCart } from './pages/cart/useCart'; // ✅ correct source
 
+// ✅ Stripe payment success/cancel handler
 const AlertWrapper = () => {
   const { clearCart } = useCart();
 
@@ -16,16 +15,20 @@ const AlertWrapper = () => {
 
     if (params.get("success") === "true") {
       alert("✅ Payment successful! Thank you for your order.");
-      clearCart();
 
+      clearCart(); // ✅ Clear from React context
+
+      // ✅ Clear from backend
       fetch(`${import.meta.env.VITE_API_BASE_URL}/cart`, {
         method: "DELETE",
         credentials: "include",
       });
+
     } else if (params.get("canceled") === "true") {
       alert("❌ Payment canceled. You can continue shopping.");
     }
 
+    // ✅ Clean up URL
     if (params.get("success") || params.get("canceled")) {
       const cleanUrl = window.location.origin + window.location.pathname;
       window.history.replaceState({}, document.title, cleanUrl);

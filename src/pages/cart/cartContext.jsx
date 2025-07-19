@@ -1,16 +1,18 @@
-// src/pages/cart/cartContext.jsx
+//src//pages//cart//cartContext.jsx
 
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../authentications/authContext";
 
-const CartContext = createContext();
+export const CartContext = createContext();
 
-const CartProvider = ({ children }) => {
+export const CartProvider = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const [cartItems, setCartItems] = useState([]);
+
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
+  // 🔐 Create headers for hybrid auth (cookie + localStorage token)
   const getAuthHeaders = () => {
     const token = localStorage.getItem("token");
     return {
@@ -22,10 +24,14 @@ const CartProvider = ({ children }) => {
   useEffect(() => {
     const fetchCart = async () => {
       if (loading) return;
-      if (!user) return setCartItems([]);
+      if (!user) {
+        setCartItems([]);
+        return;
+      }
 
       try {
         const res = await axios.get(`${API_BASE}/cart`, getAuthHeaders());
+        console.log("✅ Cart fetched:", res.data.cart);
         setCartItems(res.data.cart || []);
       } catch (err) {
         console.error("❌ Failed to load cart:", err.message);
@@ -38,8 +44,13 @@ const CartProvider = ({ children }) => {
   useEffect(() => {
     const saveCart = async () => {
       if (!user) return;
+
       try {
-        await axios.post(`${API_BASE}/cart`, { cart: cartItems }, getAuthHeaders());
+        await axios.post(
+          `${API_BASE}/cart`,
+          { cart: cartItems },
+          getAuthHeaders()
+        );
       } catch (err) {
         console.error("❌ Failed to save cart:", err.message);
       }
@@ -49,22 +60,25 @@ const CartProvider = ({ children }) => {
   }, [cartItems, user]);
 
   const addToCart = (product) => {
-    setCartItems((prev) => {
-      const exists = prev.find((item) => item.productId === product.productId);
-      if (exists) {
-        return prev.map((item) =>
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find(
+        (item) => item.productId === product.productId
+      );
+      if (existingItem) {
+        return prevItems.map((item) =>
           item.productId === product.productId
             ? { ...item, quantity: item.quantity + product.quantity }
             : item
         );
+      } else {
+        return [...prevItems, { ...product }];
       }
-      return [...prev, { ...product }];
     });
   };
 
   const increaseQuantity = (productId) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
         item.productId === productId
           ? { ...item, quantity: item.quantity + 1 }
           : item
@@ -73,8 +87,8 @@ const CartProvider = ({ children }) => {
   };
 
   const decreaseQuantity = (productId) => {
-    setCartItems((prev) =>
-      prev
+    setCartItems((prevItems) =>
+      prevItems
         .map((item) =>
           item.productId === productId
             ? { ...item, quantity: item.quantity - 1 }
@@ -85,8 +99,8 @@ const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (productId) => {
-    setCartItems((prev) =>
-      prev.filter((item) => item.productId !== productId)
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.productId !== productId)
     );
   };
 
@@ -107,6 +121,3 @@ const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
-
-export { CartContext };
-export default CartProvider;

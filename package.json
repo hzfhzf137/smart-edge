@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://hzfhzf137.github.io/smart-edge",
+  "homepage": "https://smart-edge.store",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

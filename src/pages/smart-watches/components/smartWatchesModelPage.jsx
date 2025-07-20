@@ -13,7 +13,7 @@ function Loader() {
 }
 
 function SmartWatchModel() {
-  const { scene } = useGLTF('/smart-edge/appleWatch.model.glb') 
+  const { scene } = useGLTF('/appleWatch.model.glb') 
   return (
     // "fit" auto-resizes the camera so the entire object is visible
     <Bounds fit clip observe margin={1.2}>

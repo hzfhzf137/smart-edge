@@ -13,7 +13,7 @@ function Loader() {
 }
 
 function MagSafeModel() {
-  const { scene } = useGLTF('/smart-edge/magSafe.model.glb')
+  const { scene } = useGLTF('/magSafe.model.glb')
 
 scene.rotation.x = Math.PI / 2  
 scene.rotation.y = Math.PI /2    

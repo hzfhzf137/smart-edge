@@ -66,20 +66,22 @@ const Navbar = () => {
   );
 
   return (
+
     <header
       className={`fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300 ${isScrolled ? "bg-gray-300" : "bg-blue-900 bg-opacity-50"
-        } pr-2 pl-2`}
+        } `}
     >
       <nav className="flex items-center justify-between p-2 sm:p-3 md:p-4">
-        <Link to="/">
+        <Link to="/" className="flex-shrink-0">
           <img
             src={isScrolled ? smartEdgeLogoBlue : smartEdgeLogoWhite}
             alt="logo"
-            className="h-5 object-contain"
+            className="h-6 sm:h-7 object-contain"
           />
         </Link>
 
-        <div className="flex items-center space-x-5">
+        {/* Icon Buttons */}
+        <div className="flex items-center gap-3 sm:gap-4">
           <button onClick={scrollToTop} className={iconClasses}>
             <FaArrowUp />
           </button>
@@ -90,14 +92,14 @@ const Navbar = () => {
             <FaExpand />
           </button>
 
-          {/* ✅ Cart Icon with Badge */}
-          <div className="relative">
+          {/* Cart */}
+          <div className="relative mt-1">
             <button onClick={toggleCart} className={iconClasses}>
               <FaShoppingCart />
               {totalQuantity > 0 && (
                 <span
-                  key={totalQuantity} // triggers reanimation
-                  className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full animate-bounce"
+                  key={totalQuantity}
+                  className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full animate-bounce"
                 >
                   {totalQuantity}
                 </span>
@@ -105,6 +107,7 @@ const Navbar = () => {
             </button>
           </div>
 
+          {/* Auth */}
           {loading ? (
             <span className={`${iconClasses} italic`}>...</span>
           ) : user ? (
@@ -116,9 +119,9 @@ const Navbar = () => {
                 {user.name}
               </button>
               {showLogout && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-md z-50">
-                  <div className="p-4">
-                    <p className="text-sm mb-2">Want to logout?</p>
+                <div className="absolute right-0 mt-2 w-44 bg-white border rounded shadow-md z-50 text-sm">
+                  <div className="p-3">
+                    <p className="mb-2">Want to logout?</p>
                     <button
                       onClick={() => {
                         logout();
@@ -138,52 +141,45 @@ const Navbar = () => {
             </Link>
           )}
 
-          <button onClick={toggleMenu} className={iconClasses}>
+          {/* Mobile Menu Toggle */}
+          <button onClick={toggleMenu} className={`${iconClasses} `}>
             <FaBars />
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Slide-out Menu */}
       {isOpen && (
         <>
           <div
-            className="fixed inset-0 backdrop-blur-md z-40"
+            className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40"
             onClick={() => setIsOpen(false)}
-          ></div>
-          <div className="fixed top-0 right-0 w-64 md:w-80 h-full bg-gray-800 text-white p-6 z-50">
+          />
+          <div className="fixed top-0 right-0 w-64 max-w-[80%] h-full bg-gray-900 text-white p-6 z-50 overflow-y-auto transition-transform duration-300">
             <button
               onClick={toggleMenu}
-              className="absolute top-5 right-5 text-2xl hover:text-gray-400"
+              className="absolute top-5 right-5 text-2xl text-white hover:text-gray-400"
             >
               &times;
             </button>
-            <ul className="mt-10 space-y-2 text-sm">
-              <li>
-                <Link to="/" onClick={toggleMenu}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/airpods" onClick={toggleMenu}>
-                  Airpods
-                </Link>
-              </li>
-              <li>
-                <Link to="/chargers" onClick={toggleMenu}>
-                  Chargers
-                </Link>
-              </li>
-              <li>
-                <Link to="/smart-watches" onClick={toggleMenu}>
-                  Smart Watches
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact-us" onClick={toggleMenu}>
-                  Contact Us
-                </Link>
-              </li>
+            <ul className="mt-10 space-y-4 text-base">
+              {["Home", "Airpods", "Chargers", "Smart Watches", "Contact Us"].map(
+                (label, idx) => (
+                  <li key={idx}>
+                    <Link
+                      to={
+                        label === "Home"
+                          ? "/"
+                          : "/" + label.toLowerCase().replace(/\s+/g, "-")
+                      }
+                      onClick={toggleMenu}
+                      className="block py-1 hover:underline"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
           </div>
         </>
@@ -271,6 +267,7 @@ const Navbar = () => {
         </>
       )}
     </header>
+
   );
 };
 

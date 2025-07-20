@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../authentications/authContext";
 import { FaComments, FaTimes } from "react-icons/fa";
 import { authFetch } from "../../utils/authFetch";
@@ -9,6 +9,14 @@ const Chatbot = () => {
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const messagesEndRef = useRef(null); // 👈 Ref for auto-scroll
+
+  // Scroll to bottom whenever messages change
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, loading]);
 
   // Fetch previous chat history
   useEffect(() => {
@@ -18,11 +26,7 @@ const Chatbot = () => {
       try {
         const res = await authFetch(`${import.meta.env.VITE_API_BASE_URL}/chatbot`);
         const data = await res.json();
-        if (data.messages && Array.isArray(data.messages)) {
-          setMessages(data.messages);
-        } else {
-          setMessages([]); // fallback if server returns invalid
-        }
+        setMessages(Array.isArray(data.messages) ? data.messages : []);
       } catch (err) {
         console.error("Failed to load chat history:", err);
       }
@@ -48,7 +52,10 @@ const Chatbot = () => {
       });
 
       const data = await res.json();
-      setMessages([...newMessages, { sender: "bot", text: data.reply || "No response." }]);
+      setMessages([
+        ...newMessages,
+        { sender: "bot", text: data.reply || "No response." },
+      ]);
     } catch (err) {
       console.error(err);
       setMessages([
@@ -62,32 +69,24 @@ const Chatbot = () => {
 
   // Clear chat
   const handleClearChat = async () => {
-    const confirmClear = window.confirm("Are you sure you want to delete all chat messages?");
-    if (!confirmClear) return;
+    if (!window.confirm("Are you sure you want to delete all chat messages?")) return;
 
     try {
       const res = await authFetch(`${import.meta.env.VITE_API_BASE_URL}/chatbot`, {
         method: "DELETE",
       });
-
-      if (res.ok) {
-        setMessages([]);
-      } else {
-        alert("Failed to clear chat.");
-      }
+      if (res.ok) setMessages([]);
+      else alert("Failed to clear chat.");
     } catch (err) {
       console.error("Error clearing chat:", err);
       alert("Something went wrong.");
     }
   };
 
-  // Toggle chatbot
-  const toggleChat = () => setIsOpen((prev) => !prev);
-
   return (
     <div className="fixed bottom-6 right-6 z-50">
       <button
-        onClick={toggleChat}
+        onClick={() => setIsOpen((prev) => !prev)}
         className="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg"
         title="Chat with Smart Edge"
       >
@@ -100,7 +99,10 @@ const Chatbot = () => {
             💬 Smart Edge Chatbot
           </div>
 
-          <div className="flex-1 px-3 py-2 overflow-y-auto space-y-2" style={{ maxHeight: "300px" }}>
+          <div
+            className="flex-1 px-3 py-2 overflow-y-auto space-y-2"
+            style={{ maxHeight: "300px" }}
+          >
             {!user ? (
               <div className="text-center text-gray-500 py-10">
                 Please <span className="font-medium text-blue-600">log in</span> to use the chatbot.
@@ -120,6 +122,7 @@ const Chatbot = () => {
                   </div>
                 ))}
                 {loading && <div className="text-gray-500 text-sm">Bot is typing...</div>}
+                <div ref={messagesEndRef} /> {/* 👈 Auto-scroll target */}
               </>
             )}
           </div>
@@ -141,11 +144,13 @@ const Chatbot = () => {
                 onChange={(e) => setUserInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
                 placeholder="Ask me anything..."
-                className="flex-1 px-2 py-1 border rounded text-sm"
+                className="flex-1 px-2 py-2 border rounded text-[16px] sm:text-sm" // 👈 Prevent zoom
+                style={{ fontSize: "16px" }} // 👈 Force minimum font size on mobile
               />
               <button
                 onClick={handleSend}
-                className="ml-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+                className="ml-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm"
+                style={{ fontSize: "16px" }} // 👈 Prevent zoom on button
               >
                 Send
               </button>

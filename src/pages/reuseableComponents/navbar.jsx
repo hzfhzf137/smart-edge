@@ -54,22 +54,21 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const iconClasses = `text-sm sm:text-md md:text-lg pr-1 transition duration-300 ${isScrolled ? "text-blue-600" : "text-white"
-    }`;
+  const iconClasses = `text-sm sm:text-md md:text-lg pr-1 transition duration-300 ${
+    isScrolled ? "text-blue-600" : "text-white"
+  }`;
 
-  // ✅ Calculate Total Quantity of Cart Items
   const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
 
   return (
-
     <header
-      className={`fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300 ${isScrolled ? "bg-gray-300" : "bg-blue-900 bg-opacity-50"
-        } `}
+      className={`fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300 ${
+        isScrolled ? "bg-gray-300" : "bg-blue-900 bg-opacity-50"
+      }`}
     >
       <nav className="flex items-center justify-between p-2 sm:p-3 md:p-4">
         <Link to="/" className="flex-shrink-0">
@@ -80,7 +79,6 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Icon Buttons */}
         <div className="flex items-center gap-3 sm:gap-4">
           <button onClick={scrollToTop} className={iconClasses}>
             <FaArrowUp />
@@ -92,7 +90,6 @@ const Navbar = () => {
             <FaExpand />
           </button>
 
-          {/* Cart */}
           <div className="relative mt-1">
             <button onClick={toggleCart} className={iconClasses}>
               <FaShoppingCart />
@@ -107,32 +104,47 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* Auth */}
           {loading ? (
             <span className={`${iconClasses} italic`}>...</span>
           ) : user ? (
-            <div className="relative">
+            <div className="relative z-50">
               <button
-                onClick={() => setShowLogout(!showLogout)}
+                onClick={() => setShowLogout(true)}
                 className={`font-semibold ${iconClasses}`}
               >
                 {user.name}
               </button>
+
               {showLogout && (
-                <div className="absolute right-0 mt-2 w-44 bg-white border rounded shadow-md z-50 text-sm">
-                  <div className="p-3">
-                    <p className="mb-2">Want to logout?</p>
-                    <button
-                      onClick={() => {
-                        logout();
-                        setShowLogout(false);
-                      }}
-                      className="w-full bg-red-600 text-white py-1 rounded hover:bg-red-700"
-                    >
-                      Logout
-                    </button>
+                <>
+                  {/* Logout Backdrop */}
+                  <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-40"
+                    onClick={() => setShowLogout(false)}
+                  />
+
+                  {/* Logout Popup */}
+                  <div className="absolute right-0 mt-2 w-44 bg-white border rounded shadow-md z-50 text-sm">
+                    <div className="p-3 relative">
+                      <button
+                        onClick={() => setShowLogout(false)}
+                        className="absolute top-1 right-2 text-gray-500 hover:text-black text-lg"
+                      >
+                        &times;
+                      </button>
+                      <p className="mb-2">Want to logout?</p>
+                      <button
+                        onClick={() => {
+                          logout();
+                          setShowLogout(false);
+                        }}
+                        className="w-full bg-red-600 text-white py-1 rounded hover:bg-red-700"
+                      >
+                        Logout
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
           ) : (
@@ -141,21 +153,20 @@ const Navbar = () => {
             </Link>
           )}
 
-          {/* Mobile Menu Toggle */}
-          <button onClick={toggleMenu} className={`${iconClasses} `}>
+          <button onClick={toggleMenu} className={iconClasses}>
             <FaBars />
           </button>
         </div>
       </nav>
 
-      {/* Mobile Slide-out Menu */}
+      {/* Mobile Menu */}
       {isOpen && (
         <>
           <div
             className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="fixed top-0 right-0 w-64 max-w-[80%] h-full bg-gray-900 text-white p-6 z-50 overflow-y-auto transition-transform duration-300">
+          <div className="fixed top-0 right-0 w-64 max-w-[80%] h-full bg-gray-900 text-white p-6 z-50 overflow-y-auto">
             <button
               onClick={toggleMenu}
               className="absolute top-5 right-5 text-2xl text-white hover:text-gray-400"
@@ -185,13 +196,13 @@ const Navbar = () => {
         </>
       )}
 
-      {/* Cart Panel */}
+      {/* Cart */}
       {isCartOpen && (
         <>
           <div
             className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-40"
             onClick={toggleCart}
-          ></div>
+          />
           <div className="fixed top-0 right-0 w-64 md:w-80 h-full bg-white text-black p-6 z-50 flex flex-col">
             <button
               onClick={toggleCart}
@@ -255,10 +266,11 @@ const Navbar = () => {
                   toggleCart();
                   navigate("/checkout");
                 }}
-                className={`w-full py-2 rounded-md transition duration-300 ${cartItems.length === 0
+                className={`w-full py-2 rounded-md transition duration-300 ${
+                  cartItems.length === 0
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-blue-600 text-white hover:bg-blue-700"
-                  }`}
+                }`}
               >
                 Proceed to Checkout
               </button>
@@ -267,7 +279,6 @@ const Navbar = () => {
         </>
       )}
     </header>
-
   );
 };
 

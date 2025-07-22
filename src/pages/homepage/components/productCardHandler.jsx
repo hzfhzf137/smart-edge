@@ -3,6 +3,8 @@ import ProductCard from "./productCard";
 import airpods from "../../../assets/images/airpodsImgHomePage.jpg";
 import charger from "../../../assets/images/chargerImgHomePage.png";
 import smartWatch from "../../../assets/images/smartWatchImgHomePage.png";
+import airtag from "../../../assets/images/appleAirTagImgHomePage.png";
+
 
 const products = [
   {
@@ -20,6 +22,11 @@ const products = [
     label: "Apple Watch",
     route: "/smart-watches"
 
+  },
+  {
+    image: airtag,
+    label: "Apple AirTag",
+    route: "/airTag"
   },
 ];
 

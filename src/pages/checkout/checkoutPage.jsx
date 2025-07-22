@@ -1,3 +1,5 @@
+//src//pages//checkout//checkoutPage.jsx
+
 import React, { useContext, useState } from "react";
 import { CartContext } from "../cart/cartContext";
 import { loadStripe } from "@stripe/stripe-js";

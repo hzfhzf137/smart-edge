@@ -6,13 +6,14 @@ import "./App.css";
 
 // Providers
 import { AuthProvider } from "./pages/authentications/authContext";
-import { CartProvider } from "./pages/cart/cartContext"; 
+import { CartProvider } from "./pages/cart/cartContext";
 
 // Pages
 import Home from "./pages/homepage/home";
 import Airpods from "./pages/airpods/airpods";
 import Chargers from "./pages/chargers/chargers";
 import SmartWatches from "./pages/smart-watches/smartWatches";
+import AirTag from "./pages/airTag/airTag";
 import ContactUs from "./pages/contactUs/contactUs";
 import Login from "./pages/authentications/login";
 import Signup from "./pages/authentications/signup";
@@ -20,6 +21,7 @@ import CartPage from "./pages/cart/cartPage";
 import AirpodsModelPage from "./pages/airpods/components/airpodsModelPage";
 import MagSafeModelPage from "./pages/chargers/components/magSafeModelPage";
 import SmartWatchModelPage from "./pages/smart-watches/components/smartWatchesModelPage";
+import AirTagModelPage from "./pages/airTag/components/airtagModelPage";
 import CheckoutPage from "./pages/checkout/checkoutPage";
 import ReceiptPage from "./pages/checkout/receiptPage";
 import Chatbot from "./pages/chatbot/chatbot";
@@ -53,6 +55,7 @@ function App() {
             <Route path="/airpods" element={<Airpods />} />
             <Route path="/chargers" element={<Chargers />} />
             <Route path="/smart-watches" element={<SmartWatches />} />
+            <Route path="/airTag" element={<AirTag />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -60,6 +63,7 @@ function App() {
             <Route path="/airpods-3d" element={<AirpodsModelPage />} />
             <Route path="/magSafe-3d" element={<MagSafeModelPage />} />
             <Route path="/smartWatch-3d" element={<SmartWatchModelPage />} />
+            <Route path="/airTag-3d" element={<AirTagModelPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/receipt/:orderId" element={<ReceiptPage />} />
             <Route path="*" element={<Navigate to="/" />} />

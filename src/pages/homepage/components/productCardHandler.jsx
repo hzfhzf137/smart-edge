@@ -4,6 +4,7 @@ import airpods from "../../../assets/images/airpodsImgHomePage.jpg";
 import charger from "../../../assets/images/chargerImgHomePage.png";
 import smartWatch from "../../../assets/images/smartWatchImgHomePage.png";
 import airtag from "../../../assets/images/appleAirTagImgHomePage.png";
+import magicMouse from "../../../assets/images/appleMagicMouseImgHomePage.png"
 
 
 const products = [
@@ -27,6 +28,11 @@ const products = [
     image: airtag,
     label: "Apple AirTag",
     route: "/airTag"
+  },
+  {
+    image: magicMouse,
+    label: "Apple Magic Mouse",
+    route: "/magicMouse"
   },
 ];
 

@@ -14,6 +14,7 @@ import Airpods from "./pages/airpods/airpods";
 import Chargers from "./pages/chargers/chargers";
 import SmartWatches from "./pages/smart-watches/smartWatches";
 import AirTag from "./pages/airTag/airTag";
+import MagicMouse from "./pages/magicMouse/magicMouse";
 import ContactUs from "./pages/contactUs/contactUs";
 import Login from "./pages/authentications/login";
 import Signup from "./pages/authentications/signup";
@@ -22,6 +23,7 @@ import AirpodsModelPage from "./pages/airpods/components/airpodsModelPage";
 import MagSafeModelPage from "./pages/chargers/components/magSafeModelPage";
 import SmartWatchModelPage from "./pages/smart-watches/components/smartWatchesModelPage";
 import AirTagModelPage from "./pages/airTag/components/airtagModelPage";
+import MagicMouseModelPage from "./pages/magicMouse/components/magicMouseModelPage";
 import CheckoutPage from "./pages/checkout/checkoutPage";
 import ReceiptPage from "./pages/checkout/receiptPage";
 import Chatbot from "./pages/chatbot/chatbot";
@@ -56,6 +58,7 @@ function App() {
             <Route path="/chargers" element={<Chargers />} />
             <Route path="/smart-watches" element={<SmartWatches />} />
             <Route path="/airTag" element={<AirTag />} />
+            <Route path="/magicMouse" element={<MagicMouse />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -64,6 +67,7 @@ function App() {
             <Route path="/magSafe-3d" element={<MagSafeModelPage />} />
             <Route path="/smartWatch-3d" element={<SmartWatchModelPage />} />
             <Route path="/airTag-3d" element={<AirTagModelPage />} />
+            <Route path="/magicMouse-3d" element={<MagicMouseModelPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/receipt/:orderId" element={<ReceiptPage />} />
             <Route path="*" element={<Navigate to="/" />} />

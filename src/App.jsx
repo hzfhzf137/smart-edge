@@ -15,6 +15,7 @@ import Chargers from "./pages/chargers/chargers";
 import SmartWatches from "./pages/smart-watches/smartWatches";
 import AirTag from "./pages/airTag/airTag";
 import MagicMouse from "./pages/magicMouse/magicMouse";
+import Keyboard from "./pages/keyboard/keyboard";
 import ContactUs from "./pages/contactUs/contactUs";
 import Login from "./pages/authentications/login";
 import Signup from "./pages/authentications/signup";
@@ -24,6 +25,7 @@ import MagSafeModelPage from "./pages/chargers/components/magSafeModelPage";
 import SmartWatchModelPage from "./pages/smart-watches/components/smartWatchesModelPage";
 import AirTagModelPage from "./pages/airTag/components/airtagModelPage";
 import MagicMouseModelPage from "./pages/magicMouse/components/magicMouseModelPage";
+import KeyboardModelPage from "./pages/keyboard/components/keyboardModelPage";
 import CheckoutPage from "./pages/checkout/checkoutPage";
 import ReceiptPage from "./pages/checkout/receiptPage";
 import Chatbot from "./pages/chatbot/chatbot";
@@ -59,6 +61,7 @@ function App() {
             <Route path="/smart-watches" element={<SmartWatches />} />
             <Route path="/airTag" element={<AirTag />} />
             <Route path="/magicMouse" element={<MagicMouse />} />
+            <Route path="/magicKeyboard" element={<Keyboard />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -68,6 +71,7 @@ function App() {
             <Route path="/smartWatch-3d" element={<SmartWatchModelPage />} />
             <Route path="/airTag-3d" element={<AirTagModelPage />} />
             <Route path="/magicMouse-3d" element={<MagicMouseModelPage />} />
+            <Route path="/magicKeyboard-3d" element={<KeyboardModelPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/receipt/:orderId" element={<ReceiptPage />} />
             <Route path="*" element={<Navigate to="/" />} />

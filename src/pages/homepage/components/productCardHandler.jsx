@@ -5,6 +5,7 @@ import charger from "../../../assets/images/chargerImgHomePage.png";
 import smartWatch from "../../../assets/images/smartWatchImgHomePage.png";
 import airtag from "../../../assets/images/appleAirTagImgHomePage.png";
 import magicMouse from "../../../assets/images/appleMagicMouseImgHomePage.png"
+import appleKeyboard from "../../../assets/images/appleKeyboardImgHomePage.png";
 
 
 const products = [
@@ -33,6 +34,11 @@ const products = [
     image: magicMouse,
     label: "Apple Magic Mouse",
     route: "/magicMouse"
+  },
+  {
+    image: appleKeyboard,
+    label: "Apple Magic Keyboard",
+    route: "/magicKeyboard"
   },
 ];
 

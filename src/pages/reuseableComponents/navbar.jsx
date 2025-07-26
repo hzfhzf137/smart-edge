@@ -174,9 +174,9 @@ const Navbar = () => {
               &times;
             </button>
             <ul className="mt-10 space-y-4 text-base">
-              {["Home", "Airpods", "Chargers", "Smart Watches", "Contact Us"].map(
+              {["Home", "Airpods", "Chargers", "Smart Watches", "Airtag", "Magic Mouse", "Magic Keyboard", "Contact Us" ].map(
                 (label, idx) => (
-                  <li key={idx}>
+                  <li key={idx}> 
                     <Link
                       to={
                         label === "Home"

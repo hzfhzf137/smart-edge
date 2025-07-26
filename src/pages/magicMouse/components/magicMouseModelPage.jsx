@@ -33,7 +33,7 @@ export default function AirTagModelPage() {
       {/* Back button */}
       <div style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 999 }}>
         <Link
-          to="/magicMouse"
+          to="/magic-mouse"
           style={{
             color: '#fff',
             textDecoration: 'none',

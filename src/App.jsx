@@ -60,8 +60,8 @@ function App() {
             <Route path="/chargers" element={<Chargers />} />
             <Route path="/smart-watches" element={<SmartWatches />} />
             <Route path="/airTag" element={<AirTag />} />
-            <Route path="/magicMouse" element={<MagicMouse />} />
-            <Route path="/magicKeyboard" element={<Keyboard />} />
+            <Route path="/magic-mouse" element={<MagicMouse />} />
+            <Route path="/magic-keyboard" element={<Keyboard />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

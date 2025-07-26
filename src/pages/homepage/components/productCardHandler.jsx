@@ -33,12 +33,12 @@ const products = [
   {
     image: magicMouse,
     label: "Apple Magic Mouse",
-    route: "/magicMouse"
+    route: "/magic-mouse"
   },
   {
     image: appleKeyboard,
     label: "Apple Magic Keyboard",
-    route: "/magicKeyboard"
+    route: "/magic-keyboard"
   },
 ];
 

@@ -33,7 +33,7 @@ export default function KeyboardModelPage() {
       {/* Back button */}
       <div style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 999 }}>
         <Link
-          to="/magicKeyboard"
+          to="/magic-keyboard"
           style={{
             color: '#fff',
             textDecoration: 'none',

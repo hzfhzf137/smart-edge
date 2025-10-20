@@ -35,7 +35,7 @@ const AirpodsHero = () => {
         <h1 className="text-3xl font-bold">Loading...</h1>
       ) : (
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold drop-shadow-lg">
-          AirPods Pro 2
+          AirPods Pro 
         </h1>
       )}
     </section>

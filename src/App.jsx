@@ -37,9 +37,12 @@ function App() {
   const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
-    AOS.init({ duration: 1200, once: false });
+    // Initialize AOS once
+    AOS.init({
+      duration: 1200,
+      once: true,
+    });
 
-    
     const timer = setTimeout(() => {
       setShowLoader(false);
     }, 3000);
@@ -47,14 +50,13 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (showLoader) {
-    return <Loader />;
-  }
-
   return (
     <AuthProvider>
       <CartProvider>
         <Router>
+          {/* Loader Overlay */}
+          {showLoader && <Loader />}
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/airpods" element={<Airpods />} />
@@ -77,6 +79,7 @@ function App() {
             <Route path="/receipt/:orderId" element={<ReceiptPage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
+
           <Chatbot />
         </Router>
       </CartProvider>

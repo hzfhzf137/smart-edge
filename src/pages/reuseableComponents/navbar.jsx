@@ -160,41 +160,84 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40"
-            onClick={() => setIsOpen(false)}
-          />
-          <div className="fixed top-0 right-0 w-64 max-w-[80%] h-full bg-gray-900 text-white p-6 z-50 overflow-y-auto">
-            <button
+      {/* Mobile Menu */}
+{isOpen && (
+  <>
+    <div
+      className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40"
+      onClick={() => setIsOpen(false)}
+    />
+
+    <div className="fixed top-0 right-0 w-64 max-w-[80%] h-full bg-gray-900 text-white p-6 z-50 flex flex-col overflow-y-auto">
+      <button
+        onClick={toggleMenu}
+        className="absolute top-5 right-5 text-2xl text-white hover:text-gray-400"
+      >
+        &times;
+      </button>
+
+      {/* Menu Items */}
+      <ul className="mt-10 space-y-4 text-base">
+        {[
+          "Home",
+          "Airpods",
+          "Chargers",
+          "Smart Watches",
+          "Airtag",
+          "Magic Mouse",
+          "Magic Keyboard",
+          "Contact Us",
+        ].map((label, idx) => (
+          <li key={idx}>
+            <Link
+              to={
+                label === "Home"
+                  ? "/"
+                  : "/" + label.toLowerCase().replace(/\s+/g, "-")
+              }
               onClick={toggleMenu}
-              className="absolute top-5 right-5 text-2xl text-white hover:text-gray-400"
+              className="block py-1 hover:underline"
             >
-              &times;
-            </button>
-            <ul className="mt-10 space-y-4 text-base">
-              {["Home", "Airpods", "Chargers", "Smart Watches", "Airtag", "Magic Mouse", "Magic Keyboard", "Contact Us" ].map(
-                (label, idx) => (
-                  <li key={idx}> 
-                    <Link
-                      to={
-                        label === "Home"
-                          ? "/"
-                          : "/" + label.toLowerCase().replace(/\s+/g, "-")
-                      }
-                      onClick={toggleMenu}
-                      className="block py-1 hover:underline"
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
-        </>
-      )}
+              {label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      {/* Spacer pushes footmark to bottom */}
+      <div className="mt-auto pt-6">
+        <div className="w-full h-px bg-gray-700 mb-4"></div>
+
+        {/* Footmark */}
+        <div className="text-center text-gray-400 text-[11px] space-y-1">
+          <p>
+            Design & Developed by{" "}
+            <span className="text-gray-200 font-medium">Huzaifa M.</span>
+          </p>
+          <p>
+            <a
+              href="https://huzaifa-mahmood.online"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:text-blue-500 transition"
+            >
+              huzaifa-mahmood.online
+            </a>
+          </p>
+          <p>
+            <a
+              href="mailto:hzfhzf137@gmail.com"
+              className="text-blue-400 hover:text-blue-500 transition"
+            >
+              hzfhzf137@gmail.com
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </>
+)}
+
 
       {/* Cart */}
       {isCartOpen && (
